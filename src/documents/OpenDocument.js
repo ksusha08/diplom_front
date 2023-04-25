@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Menu from "../pages/Menu";
 import '../styles/style.css';
 
 export default function OpenDocument() {
@@ -175,6 +174,7 @@ export default function OpenDocument() {
                               document.getElementById("vendoreCode").value = item.vendoreCode;
                               document.getElementById("discountPrice").value = item.discountPrice;
                             }}
+                            disabled={document.status === "проведен"}
                           >
                             Выбрать
                           </button>
@@ -219,6 +219,7 @@ export default function OpenDocument() {
                           <button
                             className="btn btn-outline-dark"
                             onClick={() => deleteInfo(info.id)}
+                            disabled={document.status === "проведен"}
                           >
                             <FontAwesomeIcon icon={faTrash} />
                           </button>

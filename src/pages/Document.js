@@ -3,16 +3,19 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Menu from "./Menu";
 import '../styles/style.css';
-import { faFilePen  } from "@fortawesome/free-solid-svg-icons";
-import { faFileCircleMinus} from "@fortawesome/free-solid-svg-icons";
+import { faFilePen } from "@fortawesome/free-solid-svg-icons";
+import { faFileCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Documents() {
   const [documents, setDocuments] = useState([]);
 
+  const [isDisabled, setIsDisabled] = useState(true);
+
   const { id } = useParams();
-  
+
+
 
   useEffect(() => {
     loadDocuments();
@@ -28,8 +31,23 @@ export default function Documents() {
     loadDocuments();
   };
 
-  const updateStatus = async (id) => {
-    await axios.post(`http://localhost:8081/income/${id}/`);
+  const holdDocument = async (selectedDocument) => {
+    if (selectedDocument.status === "проведен") {
+
+      if (selectedDocument.type === "приход") {
+        await axios.delete(`http://localhost:8081/income/${selectedDocument.id}/`);
+      } else {
+        await axios.delete(`http://localhost:8081/expense/${selectedDocument.id}/`);
+      }
+
+    } else {
+
+      if (selectedDocument.type === "приход") {
+        await axios.post(`http://localhost:8081/income/${selectedDocument.id}/`);
+      } else {
+        await axios.post(`http://localhost:8081/expense/${selectedDocument.id}/`);
+      }
+    }
     loadDocuments();
   };
 
@@ -68,7 +86,7 @@ export default function Documents() {
                       {index + 1}
                     </th>
                     <td>{document.number}</td>
-                    <td>{new Date(document.date).toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit', year: 'numeric'})}</td>
+                    <td>{new Date(document.date).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
 
                     <td>{document.status}</td>
                     <td>{document.type}</td>
@@ -76,16 +94,20 @@ export default function Documents() {
                     <td>{document.supplier.name}</td>
                     <td>{document.supplier.coefficient}</td>
                     <td>
+
+
                       <Link
-                        className="btn btn-outline-dark mx-0"
-                        to={`/editdocument/${document.id}`}
+                        className={`btn btn-outline-dark mx-0
+                         ${document.status === "проведен" ? "disabled" : ""}`}
+                        to={document.status === "проведен" ? "#" : `/editdocument/${document.id}`}
                       >
-                        <FontAwesomeIcon icon={faFilePen} />
+                         <FontAwesomeIcon icon={faFilePen} />
                       </Link>
 
                       <button
                         className="btn btn-outline-dark mx-2"
                         onClick={() => deleteDocument(document.id)}
+                        disabled={document.status === "проведен"}
                       >
                         <FontAwesomeIcon icon={faFileCircleMinus} />
                       </button>
@@ -99,8 +121,9 @@ export default function Documents() {
 
                       <button
                         className="btn btn-dark mx-2"
-                        onClick={()=> updateStatus(document.id)}
+                        onClick={() => holdDocument(document)}
                       >
+
                         Изменить статус
                       </button>
 
