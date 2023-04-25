@@ -9,10 +9,11 @@ export default function AddSupplier() {
   const [supplier,setSupplier]= useState({
     name:"",
     email:"",
-    address:""
+    address:"",
+    coefficient: ""
   });
 
-  const{name,email,address}=supplier
+  const{name,email,address,coefficient}=supplier
 
   const onInputChange= async (e)=>{
 
@@ -33,13 +34,13 @@ export default function AddSupplier() {
       <div className="row" >
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
 
-          <h2 className="text-center m-4">Добавить поставщика</h2>
+          <h2 className="text-center m-4">Добавить контрагента</h2>
 
 
           <form onSubmit={(e)=>onSubmit(e)}>
 
           <div className="mb-3">
-            <label htmFor="Name" className="form-label">Имя поставщика</label>
+            <label htmFor="Name" className="form-label">Имя контрагента</label>
             <input
               type={"text"}
               class="form-control"
@@ -68,6 +69,17 @@ export default function AddSupplier() {
               placeholder="Введите адрес"
               name="address" 
               value={address}
+              onChange={(e)=>onInputChange(e)}
+              />
+          </div>
+
+          <div className="mb-3">
+            <label htmFor="Coefficient" className="form-label">Коэффициент к цене</label>
+            <input type={"text"}
+              className="form-control"
+              placeholder="Введите коэффициент к цене"
+              name="coefficient" 
+              value={coefficient}
               onChange={(e)=>onInputChange(e)}
               />
           </div>

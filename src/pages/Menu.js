@@ -9,7 +9,7 @@ export default function Menu() {
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link to="/suppliers" className="nav-link">
-                Справочник поставщиков
+                Справочник контрагентов
               </Link>
             </li>
             <li className="nav-item">

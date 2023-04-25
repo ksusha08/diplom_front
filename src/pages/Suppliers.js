@@ -46,6 +46,7 @@ export default function Suppliers() {
                   <th scope="col">Имя</th>
                   <th scope="col">Почта</th>
                   <th scope="col">Адрес</th>
+                  <th scope="col">Коэффициент к цене</th>
                   <th scope="col">Действие</th>
                 </tr>
               </thead>
@@ -58,6 +59,7 @@ export default function Suppliers() {
                     <td>{supplier.name}</td>
                     <td>{supplier.email}</td>
                     <td>{supplier.address}</td>
+                    <td>{supplier.coefficient}</td>
                     <td>
                       <Link
                         className="btn btn-outline-dark mx-2"

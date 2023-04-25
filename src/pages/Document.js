@@ -28,6 +28,11 @@ export default function Documents() {
     loadDocuments();
   };
 
+  const updateStatus = async (id) => {
+    await axios.post(`http://localhost:8081/income/${id}/`);
+    loadDocuments();
+  };
+
   return (
     <div>
       <Menu />
@@ -51,7 +56,8 @@ export default function Documents() {
                   <th scope="col">Статус</th>
                   <th scope="col">Тип</th>
                   <th scope="col">Пользователь</th>
-                  <th scope="col">Поставщик</th>
+                  <th scope="col">Контрагент</th>
+                  <th scope="col">Коэффициент для цены</th>
                   <th scope="col">Действие</th>
                 </tr>
               </thead>
@@ -68,6 +74,7 @@ export default function Documents() {
                     <td>{document.type}</td>
                     <td>{document.user.name}</td>
                     <td>{document.supplier.name}</td>
+                    <td>{document.supplier.coefficient}</td>
                     <td>
                       <Link
                         className="btn btn-outline-dark mx-0"
@@ -92,6 +99,7 @@ export default function Documents() {
 
                       <button
                         className="btn btn-dark mx-2"
+                        onClick={()=> updateStatus(document.id)}
                       >
                         Изменить статус
                       </button>

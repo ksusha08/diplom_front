@@ -14,6 +14,8 @@ export default function OpenDocument() {
   const [amount, setAmount] = useState('');
   const [documentInfo, setDocumentInfo] = useState([]);
 
+  const [document, setDocument] = useState([]);
+
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
   };
@@ -26,6 +28,7 @@ export default function OpenDocument() {
   useEffect(() => {
     loadItems();
     loadDocumentInfo();
+    loadDocument();
   }, []);
 
   const loadDocumentInfo = async () => {
@@ -33,12 +36,18 @@ export default function OpenDocument() {
     setDocumentInfo(result.data);
   };
 
+  const loadDocument = async () => {
+    const result = await axios.get(`http://localhost:8081/document/${id}`);
+    setDocument(result.data);
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newDocumentInfo = {
       amount,
-      price: amount * selectedItem.discountPrice,
+      coefficient_price: document.supplier.coefficient * selectedItem.discountPrice,
+      summ: (amount * document.supplier.coefficient * selectedItem.discountPrice).toFixed(1)
     };
     const result = await axios.post(
       `http://localhost:8081/documentInfo/${id}/${selectedItem.id}/`,
@@ -55,6 +64,7 @@ export default function OpenDocument() {
   const deleteInfo = async (id) => {
     await axios.delete(`http://localhost:8081/documentInfo/${id}`);
     loadDocumentInfo();
+    loadItems();
   };
 
   return (
@@ -187,8 +197,9 @@ export default function OpenDocument() {
                   <thead>
                     <tr>
                       <th scope="col">Товар</th>
-                      <th scope="col">Цена</th>
                       <th scope="col">Количество</th>
+                      <th scope="col">Цена</th>
+                      <th scope="col">Цена c коэффициентом</th>
                       <th scope="col">Сумма</th>
                       <th scope="col">Действие</th>
                     </tr>
@@ -199,9 +210,10 @@ export default function OpenDocument() {
                       <tr key={index}>
 
                         <td>{info.item.name}</td>
-                        <td>{info.item.discountPrice}</td>
                         <td>{info.amount}</td>
-                        <td>{info.price}</td>
+                        <td>{info.item.discountPrice}</td>
+                        <td>{info.coefficient_price}</td>
+                        <td>{info.summ}</td>
 
                         <td>
                           <button
