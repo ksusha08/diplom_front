@@ -18,10 +18,11 @@ export default function EditDocument() {
     number: "",
     date: "",
     type: "",
+    coefficient: "",
     supplier: {id}
   });
 
-  const { number, date, type,supplier } = document
+  const { number, date, type,supplier,coefficient } = document
 
   const onInputChange = async (e) => {
 
@@ -139,6 +140,19 @@ export default function EditDocument() {
                 </button>
               </div>
             </div>
+
+            <div className="mb-3">
+              <label htmFor="coefficient" className="form-label">Коэффициент</label>
+              <input
+                type={"text"}
+                class="form-control"
+                placeholder="Введите коэффициент"
+                name="coefficient"
+                value={coefficient}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
+
             <div className="mb-3">
               <button type="submit" className="btn btn-primary me-2">
                 Редактировать

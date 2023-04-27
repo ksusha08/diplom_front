@@ -2,9 +2,13 @@
 import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import Navbar from './layout/Navbar';
+import Footer from './layout/Footer';
+
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Main from './pages/Main';
+import Contacts from './pages/Contacts';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AddUser from './users/AddUser';
@@ -33,6 +37,8 @@ function App() {
     <Navbar/>
     <Routes>
     <Route exact path="/" element= {<Login className="login-background"/>}/>
+    <Route exact path="/register" element= {<Register className="login-background"/>}/>
+
     <Route exact path="/main" element= {<Main/>}/>
 
     <Route exact path="/documents" element= {<Documents/>}/>
@@ -53,8 +59,10 @@ function App() {
     <Route exact path="/edituser/:id" element ={<EditUser/>}/>
     <Route exact path="/viewuser/:id" element={<ViewUser />} />
 
+    <Route exact path="/contacts" element= {<Contacts/>}/>
     </Routes>
   
+    <Footer/>
     </Router>
       
     </div>

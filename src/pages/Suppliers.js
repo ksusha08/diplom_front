@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Menu from "./Menu";
-import { faUserPen  } from "@fortawesome/free-solid-svg-icons";
-import { faUserMinus  } from "@fortawesome/free-solid-svg-icons";
+import { faUserPen } from "@fortawesome/free-solid-svg-icons";
+import { faUserMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import '../styles/style.css';
 
 export default function Suppliers() {
   const [suppliers, setSuppliers] = useState([]);
@@ -28,13 +30,7 @@ export default function Suppliers() {
   return (
     <div>
       <Menu />
-      <Link
-        className="btn btn-dark ml-0 "
-        to={`/addsupplier`}
-        style={{ float: "right" }}
-      >
-        Добавить поставщика
-      </Link>
+
 
       <div className="container">
         <div className="table-wrapper-scroll-y my-custom-scrollbar">
@@ -47,7 +43,15 @@ export default function Suppliers() {
                   <th scope="col">Почта</th>
                   <th scope="col">Адрес</th>
                   <th scope="col">Коэффициент к цене</th>
-                  <th scope="col">Действие</th>
+                  <th scope="col">
+                    <Link
+                      className="btn btn-dark ml-0 "
+                      to={`/addsupplier`}
+                      style={{ float: "right" }}
+                    >
+                       <FontAwesomeIcon icon={faPlus} />
+                    </Link>
+                    Действие</th>
                 </tr>
               </thead>
               <tbody>

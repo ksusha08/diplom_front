@@ -15,9 +15,10 @@ export default function AddDocument() {
     date: "",
     status: "не проведен",
     type: "",
+    coefficient: '',
   });
 
-  const { number, date, status, type } = document;
+  const { number, date, status, type,coefficient } = document;
 
   const onInputChange = async (e) => {
     setDocument({ ...document, [e.target.name]: e.target.value });
@@ -45,6 +46,7 @@ export default function AddDocument() {
   }, []);
 
   const handleSelectSupplier = (selectedSupplier) => {
+    setDocument({ ...document, coefficient: selectedSupplier.coefficient });
     setSelectedProviderId(selectedSupplier.id);
     setShowModal(false);
   };
@@ -56,6 +58,7 @@ export default function AddDocument() {
           <h2 className="text-center m-4">Добавить документ</h2>
 
           <form onSubmit={(e) => onSubmit(e)}>
+
             <div className="mb-3">
               <label htmFor="Number" className="form-label">
                 Номер
@@ -126,6 +129,21 @@ export default function AddDocument() {
                 </button>
               </div>
             </div>
+
+            <div className="mb-3">
+              <label htmFor="coefficient" className="form-label">
+              Коэффициент
+              </label>
+              <input
+                type={"text"}
+                className="form-control"
+                placeholder="Введите коэффициент"
+                name="coefficient"
+                value={coefficient}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
+
             <div className="mb-3">
               <button type="submit" className="btn btn-primary me-2">
                 Сохранить
@@ -144,10 +162,11 @@ export default function AddDocument() {
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    <th>#</th>
+              
                     <th>Название</th>
                     <th>Адрес</th>
                     <th>Email</th>
+                    <th>Коэффициент</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -156,10 +175,11 @@ export default function AddDocument() {
                       key={supplier.id}
                       onClick={() => handleSelectSupplier(supplier)}
                     >
-                      <td>{supplier.id}</td>
+                    
                       <td>{supplier.name}</td>
                       <td>{supplier.address}</td>
                       <td>{supplier.email}</td>
+                      <td>{supplier.coefficient}</td>
                     </tr>
                   ))}
                 </tbody>

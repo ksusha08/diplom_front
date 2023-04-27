@@ -71,7 +71,7 @@ export default function OpenDocument() {
       <Link
         className="btn btn-dark ml-0 "
         to={`/documents`}
-        style={{ float: "right" }}
+        style={{ float: "right"}}
       >
         Назад
       </Link>
@@ -129,10 +129,8 @@ export default function OpenDocument() {
                 </button>
 
               </div>
-
-
-
             </div>
+            
             <div className="table-wrapper-scroll-y my-custom-scrollbar">
               <div className="py-4 d-flex justify-content-end">
                 <table className="table border shadow">

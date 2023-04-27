@@ -1,0 +1,98 @@
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  
+    background-image: url('../img/1.jpg');
+    background-size: cover;
+  
+    background-blend-mode: multiply;
+    background-color: #bcbcbc;
+  }
+  
+  .login-form-wrapper {
+    position: relative;
+    
+    max-width: 470px;
+    margin: 0 auto;
+  
+    width: 470px; /* ширина формы */
+    height: 410px; /* высота формы */
+  
+    background-color: rgba(8, 8, 8, 0.979);
+  
+    border-radius: 15px;
+    
+  }
+
+  .register-form-wrapper {
+    position: relative;
+    
+    max-width: 470px;
+    margin: 0 auto;
+  
+    width: 470px; /* ширина формы */
+    height: 600px; /* высота формы */
+  
+    background-color: rgba(8, 8, 8, 0.979);
+  
+    border-radius: 15px;
+    
+  }
+  
+  .login-form-button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    right: 0;
+    transform: translateX(-50%);
+    margin-bottom: 40px; 
+    width: 70%;
+    
+
+  }
+  
+  .login-text {
+   color: aliceblue;
+  }
+
+  .login-link{
+    color: aliceblue;
+    font-size:20px;
+  }
+  
+  
+
+.pageSwitcher {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10%;
+  
+}
+
+.pageSwitcherItem {
+  background-color: #F84E77;
+  color: white;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-size: 0.8em;
+  border: none;
+  outline: none;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 25px;
+}
+.pageSwitcherItem:hover {
+    color:#9da6b1;
+    transform: translateY(4px);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+.pageSwitcherItem-active {
+  background-color: #6b5b95;
+  color: white;
+  transform: translateY(4px);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}

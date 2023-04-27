@@ -5,6 +5,8 @@
 }
 
 .table-wrapper-scroll-y {
+ 
+  padding: 30px;
   display: block;
 }
 
@@ -86,3 +88,8 @@
   width: 95px;
   margin-top: 24px;
 }
+
+th {
+  vertical-align: top ;
+}
+

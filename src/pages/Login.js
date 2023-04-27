@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/style.css';
+import '../styles/login.css';
 import '../App.css';
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, useParams } from "react-router-dom";
+import { HashRouter as Router, Route, NavLink } from "react-router-dom";
 
 
 
@@ -36,8 +38,21 @@ function Login() {
 
   return (
     <form onSubmit={handleSubmit} className="login-form d-flex justify-content-center align-items-center" >
-      <div className="border rounded p-4 mt-5.5 shadow login-form-wrapper" >
-        <h2 className="text-center m-4">Авторизация</h2>
+      <div className=" p-4 mt-5.5 login-form-wrapper" >
+
+        <div className="pageSwitcher">
+             
+              <NavLink
+                exact
+                to="/register"
+                activeClassName="pageSwitcherItem-active"
+                className="pageSwitcherItem"
+              >
+                Регистрация
+              </NavLink>
+            </div>
+
+        <h2 className="login-text text-center m-4">Авторизация</h2>
 
         <div className="mb-3 position-relative">
           <label htmlFor="username" className="form-label visually-hidden">Имя пользователя:</label>
@@ -67,7 +82,7 @@ function Login() {
 
         {error && <div className="alert alert-danger">{error}</div>}
 
-        <button type="submit" className="btn btn-outline-dark login-form-button">Войти</button>
+        <button type="submit" className="btn btn-outline-light login-form-button">Войти</button>
       </div>
     </form>
   );
