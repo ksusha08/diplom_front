@@ -28,6 +28,14 @@
     
   }
 
+  .alert {
+    padding: 1.5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+
+    
+  }
+
   .register-form-wrapper {
     position: relative;
     
@@ -51,9 +59,10 @@
     transform: translateX(-50%);
     margin-bottom: 40px; 
     width: 70%;
-    
-
   }
+
+  
+
   
   .login-text {
    color: aliceblue;
@@ -86,8 +95,9 @@
   border-radius: 25px;
 }
 .pageSwitcherItem:hover {
-    color:#9da6b1;
-    transform: translateY(4px);
+    color:white;
+    background-color: #1baaa0;
+    transform: translateY(2px);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   }
 .pageSwitcherItem-active {

@@ -25,10 +25,14 @@ function Login() {
 
         if (response.data.roles.includes('ADMIN')) {
           localStorage.setItem('user', JSON.stringify(response.data));
-          navigate('/home');
+          navigate('/activeusers');
         } else {
+          if(response.data.status.includes('активен')){
           localStorage.setItem('user', JSON.stringify(response.data));
           navigate('/main');
+          }else{
+            setError('Доступ к приложению ограничен!');
+          }
         }
       })
       .catch((error) => {

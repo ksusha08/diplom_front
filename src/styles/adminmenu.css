@@ -1,0 +1,41 @@
+.btn-disban {
+    color: #fff;
+    background-color: #94df4a;
+    border-color: rgba(125, 200, 53, .7);
+}
+
+.btn-disban:hover {
+
+    border-color: rgba(125, 200, 53, .7);
+}
+
+.admin-background {
+
+    height: 900px;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #fa625e;
+    border-color: rgba(227, 66, 61, .7);
+}
+
+.btn-danger:hover {
+    color: black;
+    background-color: #fff;
+    border-color: rgba(227, 66, 61, .7);
+}
+
+.btn-submit {
+    color: #fff;
+    background-color: #94df4a;
+    border-color: rgba(125, 200, 53, .7);
+}
+
+.btn-submit:hover {
+    border-color: rgba(125, 200, 53, .7);
+}
+
+.card{
+   
+}

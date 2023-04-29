@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {Link,useNavigate} from "react-router-dom";
+import '../styles/style.css';
 
 export default function AddSupplier() {
 
@@ -30,7 +31,7 @@ export default function AddSupplier() {
   };
 
   return (
-    <div className="container">
+    <div className=" main-container">
       <div className="row" >
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
 
@@ -91,5 +92,6 @@ export default function AddSupplier() {
         </div>
       </div>
     </div>
+
   )
 }

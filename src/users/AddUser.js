@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import '../styles/adminmenu.css';
 
 export default function AddUser() {
 
@@ -35,7 +36,7 @@ export default function AddUser() {
   };
 
   return (
-    <div className="container">
+    <div className="container admin-background">
       <div className="row" >
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
 
@@ -123,7 +124,7 @@ export default function AddUser() {
             </div>
 
             <button type="submit" className="btn btn-outline-dark">Зарегистрировать</button>
-            <Link className="btn btn-outline-danger mx-2" to="/home">Отмена</Link>
+            <Link className="btn btn-outline-danger mx-2" to="/activeusers">Отмена</Link>
           </form>
         </div>
       </div>

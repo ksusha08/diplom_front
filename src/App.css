@@ -41,7 +41,7 @@
 
 
 
-.white-background {
+.main-background {
   background-color: white;
 
   height: 90vh;
@@ -49,5 +49,11 @@
   background-image: url('./img/main1.jpg');
   background-size:contain;
  
+}
+
+.white-background {
+  background-color: white;
+
+  height: 90vh; 
 }
 

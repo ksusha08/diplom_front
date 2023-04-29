@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import Menu from "./Menu";
+import Menu from "../menu/MainMenu";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import { faUserMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,8 +28,10 @@ export default function Suppliers() {
   };
 
   return (
-    <div>
+    <div className=" main-container">
       <Menu />
+   
+      
 
 
       <div className="container">
@@ -85,6 +87,7 @@ export default function Suppliers() {
           </div>
         </div>
       </div>
+   
     </div>
   );
 }

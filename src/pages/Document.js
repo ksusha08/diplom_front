@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import Menu from "./Menu";
+import Menu from "../menu/MainMenu";
 import '../styles/style.css';
 import { faFilePen } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -50,14 +50,13 @@ export default function Documents() {
     }
     loadDocuments();
   };
+ 
 
   return (
-    <div>
+    <div className=" main-container">
       <Menu />
-
-
-
-
+    
+      <div className="container doc-container">
       <div className="table-wrapper-scroll-y my-custom-scrollbar">
         <div className="py-4 d-flex justify-content-end">
           <table className="table border shadow "  >
@@ -101,7 +100,7 @@ export default function Documents() {
                   <td>{document.supplier.name}</td>
                   <td>{document.coefficient}</td>
                   <td>{document.amount}</td>
-                  <td>{document.summ}</td>
+                  <td>{(document.summ).toFixed(1)}</td>
                   <td>
 
 
@@ -143,7 +142,8 @@ export default function Documents() {
           </table>
         </div>
       </div>
-    </div>
+      </div>
 
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import Menu from "./Menu";
+import Menu from "../menu/MainMenu";
 import { faEdit  } from "@fortawesome/free-solid-svg-icons";
 import { faTrash  } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,8 +27,9 @@ export default function Items() {
   };
 
   return (
-    <div>
+    <div className=" items-container">
       <Menu />
+   
       <Link
         className="btn btn-dark ml-0 "
         to={`/additem`}
@@ -37,10 +38,10 @@ export default function Items() {
         Добавить товар
       </Link>
 
-      <div className="container items-list">
+     
         <div className="row">
           {items.map((item, index) => (
-            <div className="col-md-4 mb-4" key={item.id}>
+            <div className="col-md-3 mb-3" key={item.id}>
               <div className="card h-100">
                 {item.photos && (
                   <img
@@ -75,6 +76,8 @@ export default function Items() {
           ))}
         </div>
       </div>
-    </div>
+      
+   
+   
   );
 }

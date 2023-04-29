@@ -1,10 +1,17 @@
 
 import './App.css';
+import './styles/menu.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import Navbar from './layout/Navbar';
 import Footer from './layout/Footer';
 
-import Home from './pages/Home';
+import MainMenu from './menu/MainMenu';
+
+import Users from './pagesAdmin/Users';
+import Applications from './pagesAdmin/Applications';
+import Blacklist from './pagesAdmin/BlackList';
+
+
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Main from './pages/Main';
@@ -28,16 +35,23 @@ import AddDocument from './documents/AddDocument';
 import EditDocument from './documents/EditDocument';
 import OpenDocument from './documents/OpenDocument';
 
+
 function App() {
   return (
+    
     <div className="App">
     
     <Router>
 
     <Navbar/>
+    
     <Routes>
     <Route exact path="/" element= {<Login className="login-background"/>}/>
     <Route exact path="/register" element= {<Register className="login-background"/>}/>
+
+    <Route exact path="/activeusers" element= {<Users/>}/>
+    <Route exact path="/applications" element= {<Applications/>}/>
+    <Route exact path="/bannedusers" element= {<Blacklist/>}/>
 
     <Route exact path="/main" element= {<Main/>}/>
 
@@ -54,7 +68,7 @@ function App() {
     <Route exact path="/addsupplier" element= {<AddSupplier/>}/>
     <Route exact path="/editsupplier/:id" element ={<EditSupplier/>}/>
 
-    <Route exact path="/home" element= {<Home/>}/>
+  
     <Route exact path="/adduser" element= {<AddUser/>}/>
     <Route exact path="/edituser/:id" element ={<EditUser/>}/>
     <Route exact path="/viewuser/:id" element={<ViewUser />} />
@@ -66,6 +80,7 @@ function App() {
     </Router>
       
     </div>
+    
   );
 }
 

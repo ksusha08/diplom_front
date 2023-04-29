@@ -6,13 +6,9 @@ import '../App.css';
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
-import { Link, useParams } from "react-router-dom";
+
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
-import {
-    faEnvelope,
-    faPhoneAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -28,7 +24,8 @@ function Login() {
         email: "",
         username: "",
         password: "",
-        role: "USER"
+        status: "заявка",
+        roles: ["USER"]
     });
 
     const { name, surname, patronymic, email, username, password, role } = user;
@@ -142,6 +139,7 @@ function Login() {
                     />
                      <FontAwesomeIcon icon={faLock} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
                 </div>
+
 
                 {error && <div className="alert alert-danger">{error}</div>}
 

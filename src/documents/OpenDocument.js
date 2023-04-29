@@ -5,6 +5,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../styles/style.css';
 
+
 export default function OpenDocument() {
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -42,11 +43,12 @@ export default function OpenDocument() {
 
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     const newDocumentInfo = {
       amount,
-      coefficient_price: document.supplier.coefficient * selectedItem.discountPrice,
-      summ: (amount * document.supplier.coefficient * selectedItem.discountPrice).toFixed(1)
+      coefficient_price: document.coefficient * selectedItem.discountPrice,
+      summ: (amount * document.coefficient * selectedItem.discountPrice).toFixed(1)
     };
     const result = await axios.post(
       `http://localhost:8081/documentInfo/${id}/${selectedItem.id}/`,
@@ -67,7 +69,8 @@ export default function OpenDocument() {
   };
 
   return (
-    <div>
+    
+    <div className="main-container">
       <Link
         className="btn btn-dark ml-0 "
         to={`/documents`}
@@ -77,7 +80,7 @@ export default function OpenDocument() {
       </Link>
 
 
-      <div className="row" style={{ marginTop: '30px' }}>
+      <div className="row" style={{ marginTop: '30px', height: '86.8vh' }}>
 
 
         <div className="col-md-6">
@@ -90,10 +93,10 @@ export default function OpenDocument() {
 
               <div className="d-flex justify-content-between mb-3" >
                 <div className='mb-3'>
-                  <label htmlFor="vendoreCode">Артикул товара:</label>
+                  <label htmlFor="vendoreCodeInput">Артикул товара:</label>
                   <input
                     type="text"
-                    id="vendoreCode"
+                    id="vendoreCodeInput"
                     name="vendoreCode"
                     className="form-control"
                     value={selectedItem ? selectedItem.vendoreCode : ""}
@@ -101,10 +104,10 @@ export default function OpenDocument() {
                   />
                 </div>
                 <div className='mb-3'>
-                  <label htmlFor="discountPrice">Цена за единицу:</label>
+                  <label htmlFor="discountPriceInput">Цена за единицу:</label>
                   <input
                     type="text"
-                    id="discountPrice"
+                    id="discountPriceInput"
                     name="discountPrice"
                     className="form-control"
                     value={selectedItem ? selectedItem.discountPrice : ""}
@@ -169,8 +172,6 @@ export default function OpenDocument() {
                             className="btn btn-dark ml-0"
                             onClick={() => {
                               setSelectedItem(item);
-                              document.getElementById("vendoreCode").value = item.vendoreCode;
-                              document.getElementById("discountPrice").value = item.discountPrice;
                             }}
                             disabled={document.status === "проведен"}
                           >
@@ -237,5 +238,6 @@ export default function OpenDocument() {
 
       </div>
     </div>
+   
   );
 }

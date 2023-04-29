@@ -1,6 +1,7 @@
 import React, {useEffect,useState} from 'react';
 import axios from "axios";
 import {Link,useNavigate,useParams} from "react-router-dom";
+import '../styles/adminmenu.css';
 
 export default function EditUser() {
 
@@ -44,7 +45,7 @@ export default function EditUser() {
   };
 
   return (
-    <div className="container">
+    <div className="container admin-background">
       <div className="row" >
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
 
@@ -116,7 +117,7 @@ export default function EditUser() {
       
 
           <button type="submit" className="btn btn-outline-dark">Редактировать</button>
-          <Link  className="btn btn-outline-danger mx-2" to ="/home">Отмена</Link>
+          <Link  className="btn btn-outline-danger mx-2" to ="/activeusers">Отмена</Link>
           </form>
         </div>
       </div>
