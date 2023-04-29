@@ -35,6 +35,10 @@ import AddDocument from './documents/AddDocument';
 import EditDocument from './documents/EditDocument';
 import OpenDocument from './documents/OpenDocument';
 
+import Category from './pages/Category';
+import EditCategory from './pages/EditCategory';
+
+
 
 function App() {
   return (
@@ -68,6 +72,8 @@ function App() {
     <Route exact path="/addsupplier" element= {<AddSupplier/>}/>
     <Route exact path="/editsupplier/:id" element ={<EditSupplier/>}/>
 
+    <Route exact path="/category" element= {<Category/>}/>
+    <Route exact path="/editcategory/:id" element= {<EditCategory/>}/>
   
     <Route exact path="/adduser" element= {<AddUser/>}/>
     <Route exact path="/edituser/:id" element ={<EditUser/>}/>

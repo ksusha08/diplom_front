@@ -55,7 +55,7 @@ export default function Items() {
                   <p className="card-text">Артикул: {item.vendoreCode}</p>
                   <p className="card-text">Цена: {item.discountPrice} BYN</p>
                   <p className="card-text">Количесвто: {item.number} </p>
-                  <p className="card-text">Описание: {item.description}</p>
+                  <p className="card-text">Категория: {item.category.name}</p>
                 </div>
                 <div className="card-footer">
                   <Link

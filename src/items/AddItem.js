@@ -1,27 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { Modal, Table } from "react-bootstrap";
 import '../styles/style.css';
 
 export default function AddItem() {
+  const [categories, setCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
   let navigate = useNavigate();
 
   const [item, setItem] = useState({
     name: '',
     vendoreCode: '',
-    description: '',
     discountPrice: '',
     number: '',
   });
 
-  const { name, vendoreCode, description, discountPrice, number } = item;
+  const { name, vendoreCode, discountPrice, number } = item;
 
   const onInputChange = (e) => {
     setItem({ ...item, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const { data } = await axios.get("http://localhost:8081/categories");
+      setCategories(data);
+    };
+    fetchCategories();
+  }, []);
 
-  //formData.append("photos", e.target.photos.files[0]);
+  const handleSelectCategory = (selectedCategory) => {
+    setSelectedCategoryId(selectedCategory.id);
+    setShowModal(false);
+  };
+
+
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -31,7 +48,9 @@ export default function AddItem() {
       type: 'application/json'
     }));
 
-    await axios.post("http://localhost:8081/item/", formData, {
+    const categoryId = selectedCategoryId;
+
+    await axios.post(`http://localhost:8081/item/${categoryId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -63,6 +82,33 @@ export default function AddItem() {
                 />
               </div>
 
+              <div className="mb-3">
+                <label htmlFor="id_category" className="form-label">
+                  Категория
+                </label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Выберите категорию"
+                    value={
+                      selectedCategoryId
+                        ? categories.find((s) => s.id === selectedCategoryId)
+                          .name
+                        : ""
+                    }
+                    readOnly
+                  />
+                  <button
+                    className="btn btn-outline-secondary"
+                    type="button"
+                    onClick={() => setShowModal(true)}
+                  >
+                    Выбрать
+                  </button>
+                </div>
+              </div>
+
               <div className='mb-3'>
                 <label htmlFor='VendoreCode' className='form-label'>
                   Артикул
@@ -77,19 +123,7 @@ export default function AddItem() {
                 />
               </div>
 
-              <div className='mb-3'>
-                <label htmlFor='Description' className='form-label'>
-                  Описание
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Введите описание'
-                  name='description'
-                  value={description}
-                  onChange={(e) => onInputChange(e)}
-                />
-              </div>
+              
 
               <div className='mb-3'>
                 <label htmlFor='Price' className='form-label'>
@@ -141,6 +175,38 @@ export default function AddItem() {
                 </button>
               </div>
             </form>
+
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+              <Modal.Header closeButton>
+                <Modal.Title>Выберите категорию</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+
+                      <th>Название</th>
+                      <th>Описание</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {categories.map((category) => (
+                      <tr
+                        key={category.id}
+                        onClick={() => handleSelectCategory(category)}
+                      >
+
+                        <td>{category.name}</td>
+                        <td>{category.description}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Modal.Body>
+            </Modal>
+
+
+
           </div>
         </div>
       </div>
