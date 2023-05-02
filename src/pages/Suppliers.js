@@ -28,7 +28,7 @@ export default function Suppliers() {
   };
 
   return (
-    <div className=" main-container">
+    <div className=" items-container">
       <Menu />
    
       

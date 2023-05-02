@@ -2,43 +2,74 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Menu from "../menu/MainMenu";
-import { faEdit  } from "@fortawesome/free-solid-svg-icons";
-import { faTrash  } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../styles/style.css';
 
 export default function Items() {
   const [items, setItems] = useState([]);
-
+  const [searchTerm, setSearchTerm] = useState('');
   const { id } = useParams();
 
   useEffect(() => {
     loadItems();
   }, []);
-
   const loadItems = async () => {
     const result = await axios.get("http://localhost:8081/items");
     setItems(result.data);
   };
-
   const deleteItem = async (id) => {
     await axios.delete(`http://localhost:8081/item/${id}`);
     loadItems();
   };
+  const searchItems = async () => {
+    const result = await axios.get(`http://localhost:8081/search_items/${searchTerm}`);
+    setItems(result.data);
+  };
 
   return (
-    <div className=" items-container">
+    <div className="items-container">
       <Menu />
-   
-      <Link
-        className="btn btn-dark ml-0 "
+      
+
+
+      <div className="search">
+
+        <input
+          type="text"
+          placeholder="Наименование товара"
+          className="form-control"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button
+          className="btn btn-dark mx-2"
+          onClick={searchItems}
+        >
+          Поиск
+        </button>
+        <button
+          className="btn btn-dark ml-1 "
+          onClick={() => loadItems()}
+          style={{ float: "right" }}
+        >
+          <FontAwesomeIcon icon={faRedo} />
+        </button>
+
+        <Link
+        className="btn btn-dark ml-1 "
         to={`/additem`}
-        style={{ float: "right" }}
+        style={{ marginLeft:"100px",float: "left" }}
       >
         Добавить товар
       </Link>
+      </div>
 
-     
+
+      <div className="item-container">
+
         <div className="row">
           {items.map((item, index) => (
             <div className="col-md-3 mb-3" key={item.id}>
@@ -73,11 +104,10 @@ export default function Items() {
                 </div>
               </div>
             </div>
+
           ))}
         </div>
       </div>
-      
-   
-   
+    </div>
   );
 }

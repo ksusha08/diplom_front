@@ -38,7 +38,9 @@ import OpenDocument from './documents/OpenDocument';
 import Category from './pages/Category';
 import EditCategory from './pages/EditCategory';
 
-
+import Reports from './pages/Reports';
+import Report2 from './pages/Report2';
+import Diagramm from './pages/Diagramm';
 
 function App() {
   return (
@@ -48,10 +50,11 @@ function App() {
     <Router>
 
     <Navbar/>
-    
+   
     <Routes>
     <Route exact path="/" element= {<Login className="login-background"/>}/>
     <Route exact path="/register" element= {<Register className="login-background"/>}/>
+
 
     <Route exact path="/activeusers" element= {<Users/>}/>
     <Route exact path="/applications" element= {<Applications/>}/>
@@ -78,6 +81,10 @@ function App() {
     <Route exact path="/adduser" element= {<AddUser/>}/>
     <Route exact path="/edituser/:id" element ={<EditUser/>}/>
     <Route exact path="/viewuser/:id" element={<ViewUser />} />
+
+    <Route exact path="/reports" element= {<Reports/>}/>
+    <Route exact path="/report2" element= {<Report2/>}/>
+    <Route exact path="/diagramm" element= {<Diagramm/>}/>
 
     <Route exact path="/contacts" element= {<Contacts/>}/>
     </Routes>

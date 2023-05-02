@@ -51,7 +51,7 @@ export default function Category() {
     };
 
     return (
-        <div className="main-container">
+        <div className="items-container">
             <Menu />
             <div className="category-container">
 

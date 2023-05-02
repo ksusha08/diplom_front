@@ -211,8 +211,8 @@ export default function OpenDocument() {
                         <td>{info.item.name}</td>
                         <td>{info.amount}</td>
                         <td>{info.item.discountPrice}</td>
-                        <td>{info.coefficient_price}</td>
-                        <td>{info.summ}</td>
+                        <td>{(info.coefficient_price).toFixed(1)}</td>
+                        <td>{(info.summ).toFixed(1)}</td>
 
                         <td>
                           <button

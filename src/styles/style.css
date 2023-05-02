@@ -104,13 +104,13 @@ th {
   vertical-align: top;
 }
 
-.doc-container {
-  width: 1600px;
-  max-width: 1600px;
-}
+
 
 .main-container {
+  position: relative;
   height: 90vh;
+
+  margin-left: 90px;
 }
 
 .items-container {
@@ -172,4 +172,36 @@ th {
   border-radius: 10px;
   width: 425px;
   height: 100px;
+}
+
+.search{
+ 
+ 
+  width: 600px;
+  height: 35px;
+  display: flex;
+  padding: 40px;
+  align-items: center;
+
+  margin-left: 90px; 
+}
+
+.doc-container{
+  margin-left: 100px; 
+  width: 1600px;
+}
+
+.item-container {
+  
+  width: 1800px;
+  height: 750px; 
+  overflow-y: scroll; 
+  
+  overflow-x: hidden;
+}
+
+.report-container {
+  max-width: 1720px;
+  display: flex;
+  margin-left: 100px;
 }

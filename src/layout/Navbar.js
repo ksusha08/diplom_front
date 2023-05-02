@@ -21,13 +21,6 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <Link
-            className="btn btn-outline-dark mx-2"
-            to={`/`}
-          >
-            Выйти
-          </Link>
-
         </div>
       </nav>
     </div>

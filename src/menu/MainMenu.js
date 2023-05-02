@@ -3,11 +3,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import '../styles/menu.css';
 import { faDolly } from "@fortawesome/free-solid-svg-icons";
-import { faFile } from "@fortawesome/free-solid-svg-icons";
+import { faPaste } from "@fortawesome/free-solid-svg-icons";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 
 export default function AdminMenu() {
   return (
@@ -34,7 +35,13 @@ export default function AdminMenu() {
 
       <li className="nav-item" data-text="Документ">
         <Link to="/documents" className="nav-link">
-        <FontAwesomeIcon icon={faFile} />
+        <FontAwesomeIcon icon={faPaste} />
+        </Link>
+      </li>
+
+      <li className="nav-item" data-text="Документ">
+        <Link to="/reports" className="nav-link">
+        <FontAwesomeIcon icon={faFileDownload} />
         </Link>
       </li>
       
@@ -43,6 +50,8 @@ export default function AdminMenu() {
         <FontAwesomeIcon icon={faRightFromBracket} />
         </Link>
       </li>
+
+      
      
     </div>
     </nav>
