@@ -4,7 +4,7 @@ import {Link,useNavigate} from "react-router-dom";
 import '../styles/style.css';
 
 export default function AddSupplier() {
-
+  const [error, setError] = useState('');
   let navigate=useNavigate()
 
   const [supplier,setSupplier]= useState({
@@ -23,8 +23,12 @@ export default function AddSupplier() {
   };
 
   const onSubmit= async (e)=>{
-
     e.preventDefault();
+    if (!name || !email || !address || !coefficient|| isNaN(parseFloat(coefficient)) ) {
+      setError('Заполните правильно все поля!');
+      return;
+    }
+
     await axios.post("http://localhost:8081/supplier",supplier);
     navigate("/suppliers");
 
@@ -84,7 +88,7 @@ export default function AddSupplier() {
               onChange={(e)=>onInputChange(e)}
               />
           </div>
-
+          {error && <div className="alert alert-danger">{error}</div>}
 
           <button type="submit" className="btn btn-outline-dark">Добавить</button>
           <Link  className="btn btn-outline-danger mx-2" to ="/suppliers">Отмена</Link>

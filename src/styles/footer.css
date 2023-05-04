@@ -108,3 +108,14 @@ a {
    width:90px;
    height:90px;
 }
+
+.privacy{
+    height: 800px;
+    max-height: 2000px;
+}
+
+.text-h5-privacy{
+    width: 200px;
+    color: rgba(0, 0, 0, 0.836);
+    margin-bottom: 15px;
+  }

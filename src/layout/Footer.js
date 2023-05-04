@@ -62,7 +62,7 @@ function Footer() {
                             <h5 className="text-white h6 mb-4">Политика</h5>
                             <ul className="list-unstyled white-link footer-links">
                                 <li>
-                                    <a href="#">Конфиденциальность</a>
+                                    <a href="/privacy">Конфиденциальность</a>
                                 </li>
                                 <li>
                                     <a href="#">Правила использования</a>

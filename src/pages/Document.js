@@ -9,7 +9,7 @@ import { faFileCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { faArrowUp} from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Documents() {
@@ -19,6 +19,7 @@ export default function Documents() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
+  const userRole = JSON.parse(localStorage.getItem("user")).roles;
 
   const { id } = useParams();
 
@@ -92,7 +93,7 @@ export default function Documents() {
 
   return (
     <div className="items-container">
-    <Menu />
+      <Menu />
 
       <div className="search">
 
@@ -247,13 +248,16 @@ export default function Documents() {
                         <FontAwesomeIcon icon={faFolderOpen} />
                       </Link>
 
-                      <button
-                        className="btn btn-dark mx-2"
-                        onClick={() => holdDocument(document)}
-                      >
 
-                        Изменить статус
-                      </button>
+                      {userRole.includes('MANAGER') && (
+                        <button
+                          className="btn btn-dark mx-2"
+                          onClick={() => holdDocument(document)}
+                        >
+
+                          Изменить статус
+                        </button>
+                      )}
 
                     </td>
                   </tr>

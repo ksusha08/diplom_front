@@ -97,25 +97,23 @@ export default function Reports() {
                         <table className="table border shadow">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
+                                    
                                     <th scope="col">Товар</th>
                                     <th scope="col">Приход</th>
                                     <th scope="col">Расход</th>
                                     <th scope="col">Остаток</th>
                                 </tr>
                             </thead>
+                    
                             <tbody>
-                                {documents.map((document, index) => (
-                                    <tr>
-                                        <th scope="row" key={index}>
-                                            {index + 1}
-                                        </th>
+                                {documents.length > 0 ? documents.map((document, index) => (
+                                    <tr key={index}>
                                         <td>{document.idinfo}</td>
                                         <td>{document.incomeAmount}</td>
                                         <td>{document.expenseAmount}</td>
                                         <td>{document.number}</td>
                                     </tr>
-                                ))}
+                                )) : <tr><td colSpan="3">Нет данных для отображения</td></tr>}
                             </tbody>
                         </table>
                     </div>

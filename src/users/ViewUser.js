@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect,useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import '../styles/adminmenu.css';
+import '../styles/style.css';
 
 
 export default function ViewUser() {
@@ -27,13 +28,12 @@ export default function ViewUser() {
   };
 
   return (
-    <form className="white-background d-flex justify-content-center align-items-center" >
-    <div className="container admin-background">
-      <div className="row">
-        <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
+    <form className="view-background d-flex justify-content-center align-items-center" >
+    <div className="view-main">
+
           <h2 className="text-center m-4">Информация о пользователе</h2>
 
-          <div className="card  mx-auto">
+          <div className="view-card">
             <div className="card-header">
               ИД : {user.id}
               <ul className="list-group list-group-flush">
@@ -75,8 +75,7 @@ export default function ViewUser() {
             Вернуться назад
           </Link>
         </div>
-      </div>
-    </div>
+     
     </form>
   );
 }

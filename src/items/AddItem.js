@@ -8,6 +8,8 @@ export default function AddItem() {
   const [categories, setCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [error, setError] = useState('');
+  
 
   let navigate = useNavigate();
 
@@ -42,6 +44,16 @@ export default function AddItem() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    if (!selectedCategoryId) {
+      setError('Заполните все поля!');
+      return;
+    }
+
+    if (!name || !vendoreCode || !discountPrice || !number || !number || isNaN(parseFloat(discountPrice)) || isNaN(parseFloat(number))) {
+      setError('Заполните правильно все поля!');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('photos', e.target.photos.files[0]);
     formData.append('item', new Blob([JSON.stringify(item)], {
@@ -61,155 +73,156 @@ export default function AddItem() {
 
 
   return (
-   
+
     <div className=" main-container">
-        <div className='row'>
-          <div className='col-md-6 offset-md-3 border rounded p-4 mt-2 shadow'>
-            <h2 className='text-center m-4'>Добавить товар</h2>
+      <div className='row'>
+        <div className='col-md-6 offset-md-3 border rounded p-4 mt-2 shadow'>
+          <h2 className='text-center m-4'>Добавить товар</h2>
 
-            <form onSubmit={(e) => onSubmit(e)} enctype="multipart/form-data">
-              <div className='mb-3'>
-                <label htmlFor='Name' className='form-label'>
-                  Наименование
-                </label>
+          <form onSubmit={(e) => onSubmit(e)} enctype="multipart/form-data">
+            <div className='mb-3'>
+              <label htmlFor='Name' className='form-label'>
+                Наименование
+              </label>
+              <input
+                type='text'
+                className='form-control'
+                placeholder='Введите наименование'
+                name='name'
+                value={name}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="id_category" className="form-label">
+                Категория
+              </label>
+              <div className="input-group">
                 <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Введите наименование'
-                  name='name'
-                  value={name}
-                  onChange={(e) => onInputChange(e)}
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="id_category" className="form-label">
-                  Категория
-                </label>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Выберите категорию"
-                    value={
-                      selectedCategoryId
-                        ? categories.find((s) => s.id === selectedCategoryId)
-                          .name
-                        : ""
-                    }
-                    readOnly
-                  />
-                  <button
-                    className="btn btn-outline-secondary"
-                    type="button"
-                    onClick={() => setShowModal(true)}
-                  >
-                    Выбрать
-                  </button>
-                </div>
-              </div>
-
-              <div className='mb-3'>
-                <label htmlFor='VendoreCode' className='form-label'>
-                  Артикул
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Введите артикул'
-                  name='vendoreCode'
-                  value={vendoreCode}
-                  onChange={(e) => onInputChange(e)}
-                />
-              </div>
-
-              
-
-              <div className='mb-3'>
-                <label htmlFor='Price' className='form-label'>
-                  Цена
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Введите цену'
-                  name='discountPrice'
-                  value={discountPrice}
-                  onChange={(e) => onInputChange(e)}
-                />
-              </div>
-
-              <div className='mb-3'>
-                <label htmlFor='Number' className='form-label'>
-                  Количество
-                </label>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='Введите количество'
-                  name='number'
-                  value={number}
-                  onChange={(e) => onInputChange(e)}
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="photos" className="form-label">
-                  Изображение товара
-                </label>
-                <input
-                  type="file"
+                  type="text"
                   className="form-control"
-                  id="photos"
-                  name="photos"
-                  accept=".jpg,.png,.jpeg"
+                  placeholder="Выберите категорию"
+                  value={
+                    selectedCategoryId
+                      ? categories.find((s) => s.id === selectedCategoryId)
+                        .name
+                      : ""
+                  }
+                  readOnly
                 />
-              </div>
-
-              <div className='d-flex justify-content-between align-items-center'>
-                <Link to='/items' className='btn btn-danger'>
-                  Назад
-                </Link>
-                <button type='submit' className='btn btn-primary'>
-                  Добавить
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={() => setShowModal(true)}
+                >
+                  Выбрать
                 </button>
               </div>
-            </form>
+            </div>
 
-            <Modal show={showModal} onHide={() => setShowModal(false)}>
-              <Modal.Header closeButton>
-                <Modal.Title>Выберите категорию</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <Table striped bordered hover>
-                  <thead>
-                    <tr>
+            <div className='mb-3'>
+              <label htmlFor='VendoreCode' className='form-label'>
+                Артикул
+              </label>
+              <input
+                type='text'
+                className='form-control'
+                placeholder='Введите артикул'
+                name='vendoreCode'
+                value={vendoreCode}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
 
-                      <th>Название</th>
-                      <th>Описание</th>
+
+
+            <div className='mb-3'>
+              <label htmlFor='Price' className='form-label'>
+                Цена
+              </label>
+              <input
+                type='text'
+                className='form-control'
+                placeholder='Введите цену'
+                name='discountPrice'
+                value={discountPrice}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
+
+            <div className='mb-3'>
+              <label htmlFor='Number' className='form-label'>
+                Количество
+              </label>
+              <input
+                type='text'
+                className='form-control'
+                placeholder='Введите количество'
+                name='number'
+                value={number}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="photos" className="form-label">
+                Изображение товара
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                id="photos"
+                name="photos"
+                accept=".jpg,.png,.jpeg"
+              />
+            </div>
+
+            {error && <div className="alert alert-danger">{error}</div>}
+            <div className='d-flex justify-content-between align-items-center'>
+              <Link to='/items' className='btn btn-danger'>
+                Назад
+              </Link>
+              <button type='submit' className='btn btn-primary'>
+                Добавить
+              </button>
+            </div>
+          </form>
+
+          <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Выберите категорию</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+
+                    <th>Название</th>
+                    <th>Описание</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categories.map((category) => (
+                    <tr
+                      key={category.id}
+                      onClick={() => handleSelectCategory(category)}
+                    >
+
+                      <td>{category.name}</td>
+                      <td>{category.description}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {categories.map((category) => (
-                      <tr
-                        key={category.id}
-                        onClick={() => handleSelectCategory(category)}
-                      >
-
-                        <td>{category.name}</td>
-                        <td>{category.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              </Modal.Body>
-            </Modal>
+                  ))}
+                </tbody>
+              </Table>
+            </Modal.Body>
+          </Modal>
 
 
 
-          </div>
         </div>
       </div>
-    
+    </div>
+
   );
 }

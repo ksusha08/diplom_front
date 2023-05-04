@@ -16,13 +16,15 @@ export default function Reports() {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [chartData, setChartData] = useState([]);
-    const [isReportGenerated, setIsReportGenerated] = useState(false);
+
 
 
     const { id } = useParams();
 
 
     const generateReport = async () => {
+        setDocuments([]);
+        setChartData([]);
         const start = new Date(startDate);
         const end = new Date(endDate);
 
@@ -36,7 +38,7 @@ export default function Reports() {
             number: document.number,
         }));
         setChartData(chartData);
-        setIsReportGenerated(true);
+
     };
 
     function IncomeChart({ data }) {
@@ -47,14 +49,14 @@ export default function Reports() {
         }));
 
         return (
-            <PieChart width={500} height={500}>
+            <PieChart width={700} height={700}>
                 <Pie
                     data={incomeData}
                     dataKey="value"
                     nameKey="name"
                     cx="50%"
-                    cy="50%"
-                    outerRadius={160}
+                    cy="30%"
+                    outerRadius={150}
                     fill="#8884d8"
                     label={(entry) => entry.name}
                 >
@@ -68,21 +70,21 @@ export default function Reports() {
     }
     
     function ExpenseChart({ data }) {
-        const COLORS = ['#e22529', '#f9ce00', '#fc0514','#790307', '#feeb31', '#c51d90', '#df2185', '#c65dcf', '#8f71ed', '#9c4bce'];
+        const COLORS = ['#790307', '#e22529', '#fc0514','#f0671c', '#f9ce00',"#feeb31", '#c51d90', '#df2185', '#c65dcf', '#8f71ed', '#9c4bce'];
         const expenseData = data.map(document => ({
             name: document.idinfo,
             value: document.expenseAmount,
         }));
 
         return (
-            <PieChart width={500} height={500}>
+            <PieChart width={700} height={700}>
                 <Pie
                     data={expenseData}
                     dataKey="value"
                     nameKey="name"
                     cx="50%"
-                    cy="50%"
-                    outerRadius={160}
+                    cy="30%"
+                    outerRadius={150}
                     fill="#8884d8"
                     label={(entry) => entry.name}
                 >
@@ -116,17 +118,17 @@ export default function Reports() {
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
                 />
-                <button className="btn btn-dark mx-2" style={{ width: '600px' }} onClick={generateReport}>
+                <button className="btn btn-dark mx-2" style={{ width: '800px' }} onClick={generateReport}>
                     Построить диаграммы
                 </button>
 
             </div>
 
             <div style={{ display: 'flex' }}>
-                {isReportGenerated && (
+               
                     <>
                         <div style={{ margin: '0 auto' }}>
-                            <h2>Приходы</h2>
+                            <h2 >Приходы</h2>
                             <IncomeChart data={documents} />
                         </div>
                         <div style={{ margin: '0 auto' }}>
@@ -134,7 +136,7 @@ export default function Reports() {
                             <ExpenseChart data={documents} />
                         </div>
                     </>
-                )}
+             
             </div>
 
 

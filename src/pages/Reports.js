@@ -101,7 +101,7 @@ export default function Reports() {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="summ" fill="#F84E77" />
+                        <Bar dataKey="summ" name="Cумма" fill="#F84E77" />
                     </BarChart>
                 </div>
             </div>

@@ -16,6 +16,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Main from './pages/Main';
 import Contacts from './pages/Contacts';
+import Privacy from './pages/Privacy';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AddUser from './users/AddUser';
@@ -87,6 +88,7 @@ function App() {
     <Route exact path="/diagramm" element= {<Diagramm/>}/>
 
     <Route exact path="/contacts" element= {<Contacts/>}/>
+    <Route exact path="/privacy" element= {<Privacy/>}/>
     </Routes>
   
     <Footer/>

@@ -14,6 +14,7 @@ export default function AddUser() {
     email: "",
     username: "",
     password:"",
+    status:"активен",
     role: "USER" 
   });
 
@@ -32,7 +33,7 @@ export default function AddUser() {
       user.roles = ["USER"];
     }
     await axios.post("http://localhost:8081/user", user);
-    navigate("/home");
+    navigate("/activeusers");
   };
 
   return (

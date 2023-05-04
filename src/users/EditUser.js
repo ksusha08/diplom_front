@@ -35,7 +35,7 @@ export default function EditUser() {
 
     e.preventDefault();
     await axios.put(`http://localhost:8081/user/${id}`,user);
-    navigate("/home");
+    navigate("/activeusers");
 
   };
 

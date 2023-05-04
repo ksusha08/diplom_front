@@ -35,7 +35,7 @@ export default function Items() {
       
 
 
-      <div className="search">
+      <div className="search-items" >
 
         <input
           type="text"
@@ -43,6 +43,7 @@ export default function Items() {
           className="form-control"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          style={{  width:"400px" }}
         />
         <button
           className="btn btn-dark mx-2"
@@ -61,7 +62,7 @@ export default function Items() {
         <Link
         className="btn btn-dark ml-1 "
         to={`/additem`}
-        style={{ marginLeft:"100px",float: "left" }}
+        style={{ marginLeft:"919px",width:"200px" }}
       >
         Добавить товар
       </Link>

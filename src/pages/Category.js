@@ -10,7 +10,7 @@ import '../styles/style.css';
 
 export default function Category() {
     const [categories, setCategories] = useState([]);
-
+    const [error, setError] = useState('');
     const { id } = useParams();
 
 
@@ -28,8 +28,11 @@ export default function Category() {
     };
 
     const onSubmit = async (e) => {
-
         e.preventDefault();
+        if (!name || !description) {
+            setError('Заполните все поля!');
+            return;
+        }
         await axios.post("http://localhost:8081/category", category);
         loadCategories();
 
@@ -66,7 +69,7 @@ export default function Category() {
                                         <th scope="col">Название</th>
                                         <th scope="col">Описание</th>
                                         <th scope="col">
-                
+
                                             Действие
                                         </th>
                                     </tr>
@@ -97,38 +100,39 @@ export default function Category() {
 
 
                     <div className="col-md-4">
-                    <form onSubmit={(e)=>onSubmit(e)}>
-                        <div className="mb-3">
-                            <label htmlFor="Name" className="form-label">
-                                Название категории
-                            </label>
-                            <input
-                                type={"text"}
-                                className="form-control"
-                                placeholder="Введите название"
-                                name="name"
-                                value={name}
-                                onChange={(e) => onInputChange(e)}
-                            />
-                        </div>
+                        <form onSubmit={(e) => onSubmit(e)}>
+                            <div className="mb-3">
+                                <label htmlFor="Name" className="form-label">
+                                    Название категории
+                                </label>
+                                <input
+                                    type={"text"}
+                                    className="form-control"
+                                    placeholder="Введите название"
+                                    name="name"
+                                    value={name}
+                                    onChange={(e) => onInputChange(e)}
+                                />
+                            </div>
 
-                        <div className="mb-3">
-                            <label htmlFor="Email" className="form-label">
-                                Описание
-                            </label>
-                            <textarea
-                                type={"text"}
-                                className="form-control-descrip"
-                                placeholder="Введите описание"
-                                name="description"
-                                value={description}
-                                onChange={(e) => onInputChange(e)}
-                            />
-                        </div>
+                            <div className="mb-3">
+                                <label htmlFor="Email" className="form-label">
+                                    Описание
+                                </label>
+                                <textarea
+                                    type={"text"}
+                                    className="form-control-descrip"
+                                    placeholder="Введите описание"
+                                    name="description"
+                                    value={description}
+                                    onChange={(e) => onInputChange(e)}
+                                />
+                            </div>
 
-                        <button type='submit' className='btn add-category-btn'>
-                            Добавить
-                        </button>
+                            {error && <div className="alert alert-danger">{error}</div>}
+                            <button type='submit' className='btn add-category-btn'>
+                                Добавить
+                            </button>
                         </form>
                     </div>
 

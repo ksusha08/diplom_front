@@ -8,12 +8,14 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
-import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { Modal, Button } from 'react-bootstrap';
 
 
 
 function Login() {
 
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -34,16 +36,34 @@ function Login() {
         setUser({ ...user, [e.target.name]: e.target.value });
     };
 
+    function isValidEmail(email) {
+
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!name || !surname || !patronymic || !email || !username || !password) {
+            setError('Заполните все поля!');
+            return;
+        }
+        if (!isValidEmail(email)) {
+            setError("Почта должна быть введена в формате exampl@exampl.com");
+            return;
+        }
         await axios.post("http://localhost:8081/user", user).then((response) => {
 
-        navigate("/");
+            setModalIsOpen(true);
+
 
         }).catch((error) => {
             setError('Такое имя пользователя уже зарегистрировано!');
         });
+    };
+    const closeModal = () => {
+        setModalIsOpen(false);
+        navigate("/");
     };
 
     return (
@@ -87,7 +107,7 @@ function Login() {
                         value={surname}
                         onChange={(e) => onInputChange(e)}
                     />
-                     <FontAwesomeIcon icon={faUser} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
+                    <FontAwesomeIcon icon={faUser} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
                 </div>
 
                 <div className="mb-3 position-relative">
@@ -100,7 +120,7 @@ function Login() {
                         value={patronymic}
                         onChange={(e) => onInputChange(e)}
                     />
-                     <FontAwesomeIcon icon={faUser} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
+                    <FontAwesomeIcon icon={faUser} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
                 </div>
 
                 <div className="mb-3 position-relative">
@@ -112,7 +132,7 @@ function Login() {
                         value={email}
                         onChange={(e) => onInputChange(e)}
                     />
-                     <FontAwesomeIcon icon={faEnvelope} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
+                    <FontAwesomeIcon icon={faEnvelope} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
                 </div>
 
                 <div className="mb-3 position-relative">
@@ -125,7 +145,7 @@ function Login() {
                         value={username}
                         onChange={(e) => onInputChange(e)}
                     />
-                     <FontAwesomeIcon icon={faUser} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
+                    <FontAwesomeIcon icon={faUser} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
                 </div>
 
                 <div className="mb-3 position-relative">
@@ -137,16 +157,26 @@ function Login() {
                         value={password}
                         onChange={(e) => onInputChange(e)}
                     />
-                     <FontAwesomeIcon icon={faLock} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
+                    <FontAwesomeIcon icon={faLock} className="position-absolute top-50 start-0 translate-middle-y ms-2" />
                 </div>
-
-
                 {error && <div className="alert alert-danger">{error}</div>}
-
                 <button type="submit" className="btn btn-outline-light login-form-button">Зарегистрироваться</button>
             </div>
-        </form>
+            <Modal show={modalIsOpen} onHide={closeModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Успешная регистрация</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Вы успешно подали заявку на регистрацию, она будет рассмотрена системным администратором!</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={closeModal}>
+                        Закрыть
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+        </form >
+
+
     );
 }
-
 export default Login;
