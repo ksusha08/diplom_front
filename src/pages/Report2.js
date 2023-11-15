@@ -38,7 +38,7 @@ export default function Reports() {
         setChartData(chartData);
         setIsReportGenerated(true);
     };
-    
+
     function saveReportToExcel() {
         const start = new Date(startDate);
         const end = new Date(endDate);
@@ -63,65 +63,65 @@ export default function Reports() {
     return (
         <div className="items-container" >
             <Menu />
-            <ReportMenu />
-            
+            <div className="category-container">
+                <ReportMenu />
+                <div className="search-analysis">
+                    <input
+                        type="date"
+                        placeholder="Дата начала"
+                        className="form-control"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                    />
+                    <input
+                        type="date"
+                        placeholder="Дата окончания"
+                        className="form-control"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                    />
+                    <button className="btn btn-dark mx-2" style={{ width: '600px' }} onClick={generateReport}>
+                        Создать отчет
+                    </button>
+                    <button className="btn btn-dark mx-2" style={{ width: '100px' }} onClick={saveReportToExcel}>
+                        Сохранить
+                    </button>
+                </div>
 
-            <div className="search">
-                <input
-                    type="date"
-                    placeholder="Дата начала"
-                    className="form-control"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                />
-                <input
-                    type="date"
-                    placeholder="Дата окончания"
-                    className="form-control"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                />
-                <button className="btn btn-dark mx-2" style={{ width: '600px' }} onClick={generateReport}>
-                    Создать отчет
-                </button>
-                <button className="btn btn-dark mx-2" style={{ width: '100px' }} onClick={saveReportToExcel}>
-                    Сохранить
-                </button>
-            </div>
 
+                <div className="report-container">
+                    <div className="table-wrapper-scroll-y my-custom-scrollbar" style={{ width: '1200px' }}>
+                        <div className="py-2 d-flex justify-content-start">
 
-        
-                <div className="table-wrapper-scroll-y my-custom-scrollbar"  style={{  width:'1200px', marginLeft:'100px'}}>
-                    <div className="py-2 d-flex justify-content-start">
+                            <table className="table border shadow">
+                                <thead>
+                                    <tr>
 
-                        <table className="table border shadow">
-                            <thead>
-                                <tr>
-                                    
-                                    <th scope="col">Товар</th>
-                                    <th scope="col">Приход</th>
-                                    <th scope="col">Расход</th>
-                                    <th scope="col">Остаток</th>
-                                </tr>
-                            </thead>
-                    
-                            <tbody>
-                                {documents.length > 0 ? documents.map((document, index) => (
-                                    <tr key={index}>
-                                        <td>{document.idinfo}</td>
-                                        <td>{document.incomeAmount}</td>
-                                        <td>{document.expenseAmount}</td>
-                                        <td>{document.number}</td>
+                                        <th scope="col">Товар</th>
+                                        <th scope="col">Приход</th>
+                                        <th scope="col">Расход</th>
+                                        <th scope="col">Остаток</th>
                                     </tr>
-                                )) : <tr><td colSpan="3">Нет данных для отображения</td></tr>}
-                            </tbody>
-                        </table>
+                                </thead>
+
+                                <tbody>
+                                    {documents.length > 0 ? documents.map((document, index) => (
+                                        <tr key={index}>
+                                            <td>{document.idinfo}</td>
+                                            <td>{document.incomeAmount}</td>
+                                            <td>{document.expenseAmount}</td>
+                                            <td>{document.number}</td>
+                                        </tr>
+                                    )) : <tr><td colSpan="3">Нет данных для отображения</td></tr>}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-               
-               
             </div>
 
-        
+        </div>
+
+
     );
 }

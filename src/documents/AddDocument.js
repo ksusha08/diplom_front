@@ -8,19 +8,26 @@ export default function AddDocument() {
   let navigate = useNavigate();
 
   const [suppliers, setSuppliers] = useState([]);
+  const [storehouses, setStorehouses] = useState([]);
+
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+
   const [selectedProviderId, setSelectedProviderId] = useState(null);
+  const [selectedStorehouseId, setSelectedStorehouseId] = useState(null);
+
   const [error, setError] = useState('');
 
   const [document, setDocument] = useState({
     number: "",
     date: "",
+    delivery: "",
     status: "не проведен",
     type: "",
     coefficient: '',
   });
 
-  const { number, date, status, type, coefficient } = document;
+  const { number, date,delivery, status, type, coefficient } = document;
 
   const onInputChange = async (e) => {
     setDocument({ ...document, [e.target.name]: e.target.value });
@@ -32,6 +39,10 @@ export default function AddDocument() {
       alert("Выберите поставщика");
       return;
     }
+    if (!selectedStorehouseId) {
+      alert("Выберите склад");
+      return;
+    }
 
     if (!number || !date || !type || isNaN(parseFloat(number)) || isNaN(parseFloat(coefficient))) {
       setError('Заполните правильно все поля!');
@@ -40,7 +51,9 @@ export default function AddDocument() {
 
     const userId = JSON.parse(localStorage.getItem("user")).id;
     const supplierId = selectedProviderId;
-    await axios.post(`http://localhost:8081/document/${userId}/${supplierId}`, document);
+    const storehouseId = selectedStorehouseId;
+    console.log(storehouseId)
+    await axios.post(`http://localhost:8081/document/${userId}/${supplierId}/${storehouseId}`, document);
     navigate("/documents");
   };
 
@@ -56,6 +69,19 @@ export default function AddDocument() {
     setDocument({ ...document, coefficient: selectedSupplier.coefficient });
     setSelectedProviderId(selectedSupplier.id);
     setShowModal(false);
+  };
+
+  useEffect(() => {
+    const fetchStorehouses = async () => {
+      const { data } = await axios.get("http://localhost:8081/storehouses");
+      setStorehouses(data);
+    };
+    fetchStorehouses();
+  }, []);
+
+  const handleSelectStorehouse = (selectedStorehouse) => {
+    setSelectedStorehouseId(selectedStorehouse.id);
+    setShowModal2(false);
   };
 
   return (
@@ -91,6 +117,20 @@ export default function AddDocument() {
                 placeholder="Выберите дату артикул"
                 name="date"
                 value={date}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmFor="delivery" className="form-label">
+                Время доставки в днях
+              </label>
+              <input
+                type={"number"}
+                className="form-control"
+                placeholder="Введите число"
+                name="delivery"
+                value={delivery}
                 onChange={(e) => onInputChange(e)}
               />
             </div>
@@ -132,6 +172,33 @@ export default function AddDocument() {
                   className="btn btn-outline-secondary"
                   type="button"
                   onClick={() => setShowModal(true)}
+                >
+                  Выбрать
+                </button>
+              </div>
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="id_storehouse" className="form-label">
+                Склад
+              </label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Выберите склад"
+                  value={
+                    selectedStorehouseId
+                      ? storehouses.find((s) => s.id === selectedStorehouseId)
+                        .name
+                      : ""
+                  }
+                  readOnly
+                />
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={() => setShowModal2(true)}
                 >
                   Выбрать
                 </button>
@@ -195,6 +262,40 @@ export default function AddDocument() {
               </Table>
             </Modal.Body>
           </Modal>
+
+          <Modal show={showModal2} onHide={() => setShowModal2(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Выберите склад</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+
+                    <th>Название</th>
+                    <th>Адрес</th>
+                    <th>Максимальная вместимость</th>
+                
+                  </tr>
+                </thead>
+                <tbody>
+                  {storehouses.map((storehouse) => (
+                    <tr
+                      key={storehouse.id}
+                      onClick={() => handleSelectStorehouse(storehouse)}
+                    >
+
+                      <td>{storehouse.name}</td>
+                      <td>{storehouse.address}</td>
+                      <td>{storehouse.max_capacity}</td>
+                      
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Modal.Body>
+          </Modal>
+
         </div>
       </div>
     </div>

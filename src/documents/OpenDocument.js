@@ -3,12 +3,18 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ErrorModal from "../context/ErrorModal";
+
 import '../styles/style.css';
 
 
 export default function OpenDocument() {
+  const [error, setError] = useState(null);
+
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+
+
 
   const { id } = useParams();
   const [amount, setAmount] = useState('');
@@ -22,7 +28,14 @@ export default function OpenDocument() {
 
   const loadItems = async () => {
     const result = await axios.get("http://localhost:8081/items");
-    setItems(result.data);
+    const itemsWithStorehouseQuantity = await Promise.all(result.data.map(async (item) => {
+      const storehouseItem = await axios.get(`http://localhost:8081/storehouseitembystorageanditem/${item.id}/${id}`);
+      return {
+        ...item,
+        storehouseQuantity: storehouseItem.data.amount
+      };
+    }));
+    setItems(itemsWithStorehouseQuantity);
   };
 
   useEffect(() => {
@@ -43,13 +56,20 @@ export default function OpenDocument() {
 
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
+
+    if (document.type=="расход" && selectedItem && amount > selectedItem.storehouseQuantity) {
+      setError("Недостаточно товаров на складе.");
+      return;
+    }
+
+
     const newDocumentInfo = {
       amount,
       coefficient_price: document.coefficient * selectedItem.discountPrice,
       summ: (amount * document.coefficient * selectedItem.discountPrice).toFixed(1)
     };
+    setError(null);
     const result = await axios.post(
       `http://localhost:8081/documentInfo/${id}/${selectedItem.id}/`,
       newDocumentInfo
@@ -69,16 +89,23 @@ export default function OpenDocument() {
   };
 
   return (
-    
+
     <div className="main-container">
       <Link
         className="btn btn-dark ml-0 "
         to={`/documents`}
-        style={{ float: "right"}}
+        style={{ float: "right" }}
       >
         Назад
       </Link>
 
+      <div className="container">
+        {/* Display error modal if error exists */}
+        {error && (
+          <ErrorModal message={error} onClose={() => setError(null)} />
+        )}
+        {/* ... (rest of your JSX) ... */}
+      </div>
 
       <div className="row" style={{ marginTop: '30px', height: '86.8vh' }}>
 
@@ -133,7 +160,7 @@ export default function OpenDocument() {
 
               </div>
             </div>
-            
+
             <div className="table-wrapper-scroll-y my-custom-scrollbar">
               <div className="py-4 d-flex justify-content-end">
                 <table className="table border shadow">
@@ -142,9 +169,9 @@ export default function OpenDocument() {
                       <th scope="col">ИД</th>
                       <th scope="col">Название</th>
                       <th scope="col">Артикул</th>
-                      <th scope="col">Описание</th>
                       <th scope="col">Цена</th>
-                      <th scope="col">Количесвто</th>
+                      <th scope="col">Общее Количество</th>
+                      <th scope="col">Количество на складе</th>
                       <th scope="col">Изображение</th>
                       <th scope="col">Действие</th>
                     </tr>
@@ -155,9 +182,9 @@ export default function OpenDocument() {
                         <th scope="row">{item.id}</th>
                         <td>{item.name}</td>
                         <td>{item.vendoreCode}</td>
-                        <td>{item.description}</td>
                         <td>{item.discountPrice}</td>
                         <td>{item.number}</td>
+                        <td>{item.storehouseQuantity}</td>
                         <td>
                           {item.photos && (
                             <img
@@ -238,6 +265,6 @@ export default function OpenDocument() {
 
       </div>
     </div>
-   
+
   );
 }

@@ -13,6 +13,7 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Documents() {
+  const [documentInfo, setDocumentInfo] = useState([]);
   const [documents, setDocuments] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -53,6 +54,15 @@ export default function Documents() {
   };
 
   const deleteDocument = async (id) => {
+
+    const result = await axios.get(`http://localhost:8081/documentInfo/findByDocId/${id}`);
+    const documentInfoList = result.data;
+
+    // Проходим по всем записям в DocumentInfo и удаляем каждую по ее id
+    await Promise.all(documentInfoList.map(async (documentInfo) => {
+      await axios.delete(`http://localhost:8081/documentInfo/${documentInfo.id}`);
+    }));
+
     await axios.delete(`http://localhost:8081/document/${id}`);
     loadDocuments();
   };
@@ -110,9 +120,8 @@ export default function Documents() {
         >
           Поиск
         </button>
-      </div>
 
-      <div className="search">
+        <div className="search2">
         <input
           type="date"
           placeholder="Дата начала"
@@ -131,6 +140,9 @@ export default function Documents() {
           Фильтровать
         </button>
       </div>
+      </div>
+
+      
 
       <div className="doc-container">
         <div className="table-wrapper-scroll-y my-custom-scrollbar">
@@ -150,6 +162,17 @@ export default function Documents() {
                     {sortField === 'date' && sortOrder === 'asc' && <FontAwesomeIcon icon={faArrowUp} />}
                     {sortField === 'date' && sortOrder === 'desc' && <FontAwesomeIcon icon={faArrowDown} />}
                   </th>
+                  <th scope="col" onClick={() => sortDocuments('storehouse')}>
+                    Время доставки
+                    {sortField === 'delivery' && sortOrder === 'asc' && <FontAwesomeIcon icon={faArrowUp} />}
+                    {sortField === 'delivery' && sortOrder === 'desc' && <FontAwesomeIcon icon={faArrowDown} />}
+                  </th>
+                  <th scope="col" onClick={() => sortDocuments('storehouse')}>
+                    Склад
+                    {sortField === 'storehouse' && sortOrder === 'asc' && <FontAwesomeIcon icon={faArrowUp} />}
+                    {sortField === 'storehouse' && sortOrder === 'desc' && <FontAwesomeIcon icon={faArrowDown} />}
+                  </th>
+
                   <th scope="col" onClick={() => sortDocuments('status')}>
                     Статус
                     {sortField === 'status' && sortOrder === 'asc' && <FontAwesomeIcon icon={faArrowUp} />}
@@ -214,7 +237,8 @@ export default function Documents() {
 
                     <td>{document.number}</td>
                     <td>{new Date(document.date).toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })}</td>
-
+                    <td>{document.delivery}</td>
+                    <td>{document.storehouse.name}</td>
                     <td>{document.status}</td>
                     <td>{document.type}</td>
                     <td>{document.user.name}</td>

@@ -42,8 +42,9 @@ export default function Reports() {
     return (
         <div className="items-container" >
             <Menu />
+            <div className="category-container">
             <ReportMenu />
-            <div className="search">
+            <div className="search-analysis">
                 <input
                     type="date"
                     placeholder="Дата начала"
@@ -104,6 +105,7 @@ export default function Reports() {
                         <Bar dataKey="summ" name="Cумма" fill="#F84E77" />
                     </BarChart>
                 </div>
+            </div>
             </div>
         </div>
     );

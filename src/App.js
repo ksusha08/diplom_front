@@ -39,9 +39,18 @@ import OpenDocument from './documents/OpenDocument';
 import Category from './pages/Category';
 import EditCategory from './pages/EditCategory';
 
+import Storehouse from './storehouses/Storehouse';
+import EditStorehouse from './storehouses/EditStorehouse';
+import StorehouseItems from './storehouses/StorehouseItems';
+
+import ABCAnalysis from './pages/ABCAnalysis';
+
+
 import Reports from './pages/Reports';
 import Report2 from './pages/Report2';
 import Diagramm from './pages/Diagramm';
+import Recommendations from './analysis/Recommendations';
+import Calculation from './analysis/Calculation';
 
 function App() {
   return (
@@ -76,12 +85,21 @@ function App() {
     <Route exact path="/addsupplier" element= {<AddSupplier/>}/>
     <Route exact path="/editsupplier/:id" element ={<EditSupplier/>}/>
 
+    <Route exact path="/storehouse" element= {<Storehouse/>}/>
+    <Route exact path="/editstorehouse" element= {<EditStorehouse/>}/>
+    <Route exact path="/storehouseitems/:id" element ={<StorehouseItems/>}/>
+
     <Route exact path="/category" element= {<Category/>}/>
     <Route exact path="/editcategory/:id" element= {<EditCategory/>}/>
   
     <Route exact path="/adduser" element= {<AddUser/>}/>
     <Route exact path="/edituser/:id" element ={<EditUser/>}/>
     <Route exact path="/viewuser/:id" element={<ViewUser />} />
+
+    <Route exact path="/adcanalysis" element= {<ABCAnalysis/>}/>
+    
+    <Route exact path="/recommendations" element= {<Recommendations/>}/>
+    <Route exact path="/calculation" element= {<Calculation/>}/>
 
     <Route exact path="/reports" element= {<Reports/>}/>
     <Route exact path="/report2" element= {<Report2/>}/>

@@ -12,6 +12,10 @@ export default function EditDocument() {
   const [showModal, setShowModal] = useState(false);
   const [selectedProviderId, setSelectedProviderId] = useState(null);
 
+  const [storehouses, setStorehouses] = useState([]);
+  const [showModal2, setShowModal2] = useState(false);
+  const [selectedStorehouseId, setSelectedStorehouseId] = useState(null);
+
 
   const userRole = JSON.parse(localStorage.getItem("user")).roles;
 
@@ -20,12 +24,14 @@ export default function EditDocument() {
   const [document, setDocument] = useState({
     number: "",
     date: "",
+    delivery:"",
     type: "",
     coefficient: "",
-    supplier: { id }
+    supplier: "",
+    storehouse: "",
   });
 
-  const { number, date, type, supplier, coefficient } = document
+  const { number, date, delivery,type, coefficient } = document
 
   const onInputChange = async (e) => {
 
@@ -46,7 +52,15 @@ export default function EditDocument() {
     if (!selectedProviderId) {
       supplierId = document.supplier.id;
     }
-    await axios.put(`http://localhost:8081/document/${id}/${supplierId}`, document);
+
+    let storehouseId = selectedStorehouseId;
+
+    if (!selectedStorehouseId) {
+      storehouseId = document.storehouse.id;
+    }
+
+
+    await axios.put(`http://localhost:8081/document/${id}/${supplierId}/${storehouseId}`, document);
     navigate("/documents");
 
   };
@@ -54,6 +68,7 @@ export default function EditDocument() {
   const loadDocument = async () => {
     const result = await axios.get(`http://localhost:8081/document/${id}`);
     setDocument(result.data);
+    
   };
 
   useEffect(() => {
@@ -67,6 +82,20 @@ export default function EditDocument() {
   const handleSelectSupplier = (selectedSupplier) => {
     setSelectedProviderId(selectedSupplier.id);
     setShowModal(false);
+  };
+
+
+  useEffect(() => {
+    const fetchStorehouses = async () => {
+      const { data } = await axios.get("http://localhost:8081/storehouses");
+      setStorehouses(data);
+    };
+    fetchStorehouses();
+  }, []);
+
+  const handleSelectStorehouse = (selectedStorehouse) => {
+    setSelectedStorehouseId(selectedStorehouse.id);
+    setShowModal2(false);
   };
 
   return (
@@ -99,6 +128,18 @@ export default function EditDocument() {
                 placeholder="Введите дату"
                 name="date"
                 value={date}
+                onChange={(e) => onInputChange(e)}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmFor="delivery" className="form-label">Время доставки в днях</label>
+              <input
+                type={"number"}
+                class="form-control"
+                placeholder="Введите время доставки в днях"
+                name="delivery"
+                value={delivery}
                 onChange={(e) => onInputChange(e)}
               />
             </div>
@@ -139,6 +180,34 @@ export default function EditDocument() {
                   className="btn btn-outline-secondary"
                   type="button"
                   onClick={() => setShowModal(true)}
+                >
+                  Выбрать
+                </button>
+              </div>
+            </div>
+
+
+            <div className="mb-3">
+              <label htmlFor="id_provider" className="form-label">
+                Склад
+              </label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Выберите склад"
+                  value={
+                    selectedStorehouseId
+                      ? storehouses.find((s) => s.id === selectedStorehouseId)
+                        .name
+                      : ""
+                  }
+                  readOnly
+                />
+                <button
+                  className="btn btn-outline-secondary"
+                  type="button"
+                  onClick={() => setShowModal2(true)}
                 >
                   Выбрать
                 </button>
@@ -201,6 +270,38 @@ export default function EditDocument() {
               </Table>
             </Modal.Body>
           </Modal>
+
+          <Modal show={showModal2} onHide={() => setShowModal2(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>Выберите склад</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Адрес</th>
+                    <th>вместимость</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {storehouses.map((storehouse) => (
+                    <tr
+                      key={storehouse.id}
+                      onClick={() => handleSelectStorehouse(storehouse)}
+                    >
+                      <td>{storehouse.id}</td>
+                      <td>{storehouse.name}</td>
+                      <td>{storehouse.address}</td>
+                      <td>{storehouse.max_capacity}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Modal.Body>
+          </Modal>
+
         </div>
       </div>
     </div>

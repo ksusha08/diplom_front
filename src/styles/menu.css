@@ -148,7 +148,7 @@
 
     margin-right: 10px;
     margin-left: 8px;
-    margin-top: 320px;
+    margin-top: 220px;
     font-size: 18px;
 
     margin-bottom: 20px;
@@ -162,15 +162,19 @@
 
 .report-menu-li {
     display: inline-block;
-    margin-left: 100px;
+    margin-left: 0px;
+    margin-right: 90px;
     color: black;
     margin-top: 20px;
+    font-size: 18px;
+    
 
 }
 
 .report-menu {
-    text-align: left;
+    text-align: start;
     color: black;
+    margin-left: 0px;
 }
 
 .report-menu-li a {

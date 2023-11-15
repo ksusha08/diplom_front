@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
+import { faWarehouse } from "@fortawesome/free-solid-svg-icons";
 
 export default function AdminMenu() {
   const userRole = JSON.parse(localStorage.getItem("user")).roles;
@@ -17,6 +18,17 @@ export default function AdminMenu() {
       <div className="menu-style">
 
 
+        <li className="nav-item" data-text="Справочник складов">
+          <Link to="/storehouse" className="nav-link">
+            <FontAwesomeIcon icon={faWarehouse} />
+          </Link>
+        </li>
+
+        <li className="nav-item" data-text="Справочник поставщиков">
+          <Link to="/suppliers" className="nav-link">
+            <FontAwesomeIcon icon={faAddressBook} />
+          </Link>
+        </li>
 
         <li className="nav-item" data-text="Справрчник категорий">
           <Link to="/category" className="nav-link">
@@ -24,7 +36,7 @@ export default function AdminMenu() {
           </Link>
         </li>
 
-        <li className="nav-item" data-text="Справочнки товаров">
+        <li className="nav-item" data-text="Справочник товаров">
           <Link to="/items" className="nav-link">
             <FontAwesomeIcon icon={faDolly} />
           </Link>
@@ -37,17 +49,10 @@ export default function AdminMenu() {
           </Link>
         </li>
 
-        {userRole.includes('MANAGER') && (
-          <li className="nav-item" data-text="Справочнки поставщиков">
-            <Link to="/suppliers" className="nav-link">
-              <FontAwesomeIcon icon={faAddressBook} />
-            </Link>
-          </li>
-        )}
 
         {userRole.includes('MANAGER') && (
           <li className="nav-item" data-text="Аналитика">
-            <Link to="/reports" className="nav-link">
+            <Link to="/adcanalysis" className="nav-link">
               <FontAwesomeIcon icon={faChartSimple} />
             </Link>
           </li>

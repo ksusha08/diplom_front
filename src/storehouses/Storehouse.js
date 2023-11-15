@@ -2,64 +2,69 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Menu from "../menu/MainMenu";
-
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import '../styles/style.css';
 
-export default function Category() {
-    const [categories, setCategories] = useState([]);
+export default function Storehouse() {
+    const [storehouses, setStorehouses] = useState([]);
     const [error, setError] = useState('');
     const { id } = useParams();
 
 
-    const [category, setCategory] = useState({
+    const [storehouse, setStorehouse] = useState({
         name: "",
-        description: ""
+        address: "",
+        max_capacity: ""
     });
 
-    const { name, description } = category
+    const { name, address,max_capacity } = storehouse
 
     const onInputChange = async (e) => {
 
-        setCategory({ ...category, [e.target.name]: e.target.value });
+        setStorehouse({ ...storehouse, [e.target.name]: e.target.value });
 
     };
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        if (!name || !description) {
+        if (!name || !address || !max_capacity) {
             setError('Заполните все поля!');
             return;
         }
-        await axios.post("http://localhost:8081/category", category);
-        loadCategories();
+        
+        if (isNaN(parseFloat(max_capacity))) {
+            setError('Максимальная вместительность должна быть числом');
+            return;
+        }
+
+        await axios.post("http://localhost:8081/storehouse", storehouse);
+        loadStorehouses();
 
 
     };
 
     useEffect(() => {
-        loadCategories();
+        loadStorehouses();
     }, []);
 
-    const loadCategories = async () => {
-        const result = await axios.get("http://localhost:8081/categories");
-        setCategories(result.data);
+    const loadStorehouses = async () => {
+        const result = await axios.get("http://localhost:8081/storehouses");
+        setStorehouses(result.data);
     };
 
-    const deleteCategory = async (id) => {
-        await axios.delete(`http://localhost:8081/category/${id}`);
-        loadCategories();
+    const deleteStorehouse = async (id) => {
+        await axios.delete(`http://localhost:8081/storehouse/${id}`);
+        loadStorehouses();
     };
 
     return (
         <div className="items-container">
             <Menu />
-            
             <div className="category-container">
 
-                <div className="row">
+                <div className="row" >
 
                     <div className="col-md-7">
                         <div className="py-4 d-flex justify-content-end">
@@ -68,7 +73,8 @@ export default function Category() {
                                     <tr>
                                         <th scope="col">ИД</th>
                                         <th scope="col">Название</th>
-                                        <th scope="col">Описание</th>
+                                        <th scope="col">Адрес</th>
+                                        <th scope="col">Максимальная вместительность</th>
                                         <th scope="col">
 
                                             Действие
@@ -76,19 +82,20 @@ export default function Category() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {categories.map((category, index) => (
+                                    {storehouses.map((storehouse, index) => (
                                         <tr>
                                             <th scope="row" key={index}>
                                                 {index + 1}
                                             </th>
-                                            <td>{category.name}</td>
-                                            <td>{category.description}</td>
+                                            <td>{storehouse.name}</td>
+                                            <td>{storehouse.address}</td>
+                                            <td>{storehouse.max_capacity}</td>
 
                                             <td>
-                                                <Link className="btn btn-outline-dark mx-2" to={`/editcategory/${category.id}`}>
+                                                <Link className="btn btn-outline-dark mx-2" to={`/editstorehouse/${storehouse.id}`}>
                                                     <FontAwesomeIcon icon={faPen} />
                                                 </Link>
-                                                <button className="btn btn-dark mx-2" onClick={() => deleteCategory(category.id)}>
+                                                <button className="btn btn-dark mx-2" onClick={() => deleteStorehouse(storehouse.id)}>
                                                     <FontAwesomeIcon icon={faMinus} />
                                                 </button>
                                             </td>
@@ -104,7 +111,7 @@ export default function Category() {
                         <form onSubmit={(e) => onSubmit(e)}>
                             <div className="mb-3">
                                 <label htmlFor="Name" className="form-label">
-                                    Название категории
+                                    Название склада
                                 </label>
                                 <input
                                     type={"text"}
@@ -117,15 +124,29 @@ export default function Category() {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="Email" className="form-label">
-                                    Описание
+                                <label htmlFor="Name" className="form-label">
+                                    Адрес
                                 </label>
-                                <textarea
+                                <input
                                     type={"text"}
-                                    className="form-control-descrip"
-                                    placeholder="Введите описание"
-                                    name="description"
-                                    value={description}
+                                    className="form-control"
+                                    placeholder="Введите адрес"
+                                    name="address"
+                                    value={address}
+                                    onChange={(e) => onInputChange(e)}
+                                />
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="Name" className="form-label">
+                                    Максимальная вместительность
+                                </label>
+                                <input
+                                    type={"text"}
+                                    className="form-control"
+                                    placeholder="Введите максимальную вместительность"
+                                    name="max_capacity"
+                                    value={max_capacity}
                                     onChange={(e) => onInputChange(e)}
                                 />
                             </div>

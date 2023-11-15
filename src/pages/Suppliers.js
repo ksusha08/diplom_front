@@ -31,10 +31,7 @@ export default function Suppliers() {
     <div className=" items-container">
       <Menu />
    
-      
-
-
-      <div className="container">
+      <div className="category-container">
         <div className="table-wrapper-scroll-y my-custom-scrollbar">
           <div className="py-4 d-flex justify-content-end">
             <table className="table border shadow">

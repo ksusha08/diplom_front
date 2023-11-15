@@ -40,7 +40,7 @@ function Footer() {
                         <div className="col-sm-6 col-lg-3 my-4">
                             
                             <div className="text-white-65 mb-4 text-start">
-                                ПРОГРАММНОЕ СРЕДСТВО УЧЕТА И АНАЛИЗА ТОРГОВО-СКЛАДСКИХ ОПЕРАЦИЙ ПРЕДПРИЯТИЯ МАЛОГО БИЗНЕСА
+                                ПРОГРАММНОЕ СРЕДСТВО УПРАВЛЕНИЯ ЗАПАСАМИ ПРЕДПРИЯТИЯ
                             </div>
                             <div className="nav footer-socila-icon">
 

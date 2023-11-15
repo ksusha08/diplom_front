@@ -52,10 +52,7 @@ export default function EditItem() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !vendoreCode || !discountPrice || !number || isNaN(parseFloat(discountPrice)) || isNaN(parseFloat(number))) {
-      setError('Заполните правильно все поля!');
-      return;
-    }
+  
 
     const formData = new FormData();
     formData.append('photos', e.target.photos.files[0]);
@@ -67,6 +64,10 @@ export default function EditItem() {
     if (!selectedCategoryId) {
       categoryId = item.category.id;
     }
+
+
+  
+
     await axios.put(`http://localhost:8081/item/${id}/${categoryId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -177,6 +178,8 @@ export default function EditItem() {
             </div>
             
             {error && <div className="alert alert-danger">{error}</div>}
+
+            
 
             <button type="submit" className="btn btn-outline-dark">Редактировать</button>
             <Link className="btn btn-outline-danger mx-2" to="/items">Отмена</Link>

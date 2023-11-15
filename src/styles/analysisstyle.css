@@ -1,0 +1,100 @@
+
+.abc-category-A {
+
+    background-color: rgba(124, 181, 24, 0.9);
+  }
+  
+  .abc-category-B {
+  
+    background-color: rgba(249, 206, 0, 0.9);
+    
+  }
+  
+  .abc-category-C {
+    background-color: rgba(255, 36, 0, 0.8);
+  }
+  
+
+.product-category-A-Y {
+    background-color: #33FF57;
+    color: #000;
+
+}
+
+.product-category-A-X {
+  background-color: #33FF57;
+  color: #000;
+}
+
+.product-category-B-X {
+  background-color: #33FF57;
+  color: #000;
+}
+
+.product-category-C-X {
+  background-color: #33FF57;
+  color: #000;
+}
+
+.product-category-A-Z {
+  background-color: #FF5733; /* Назначьте цвет, который вы хотите для этой категории */
+  color: #fff; /* Цвет текста (белый, чтобы обеспечить контраст) */
+}
+
+.product-category-C-Z {
+  background-color: rgba(255, 36, 0, 0.8);
+    color: #fff;
+}
+
+.custom-modal-dialog {
+  max-width: 1000px; /* Максимальная ширина модального окна */
+  max-height: 2000px; /* Максимальная высота модального окна */
+  width: 1000px; /* Ширина модального окна (по умолчанию 50%) */
+  height: 2000px; /* Высота модального окна (по умолчанию 50%) */
+}
+
+ul {
+  list-style-type: none;
+  
+}
+
+.checkbox-container {
+  width: 400px;
+  border: 2px solid #D5D5D5; /* Добавляем рамку вокруг области чекбоксов */
+  padding: 10px; /* Добавляем отступ вокруг чекбоксов */
+  border-radius: 10px; /* Добавляем скругленные углы */
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+ 
+}
+
+.checkbox-container2 {
+  width: 500px;
+  border: 2px solid #D5D5D5; /* Добавляем рамку вокруг области чекбоксов */
+  padding: 10px; /* Добавляем отступ вокруг чекбоксов */
+  border-radius: 20px; /* Добавляем скругленные углы */
+  
+}
+
+/* Стили для самих чекбоксов */
+.checkbox-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  margin-right: 5px; /* Добавляем отступ между чекбоксом и текстом */
+}
+
+.checkbox-label {
+  display: flex; /* Используем flexbox для расположения элементов внутри label */
+  align-items: center; /* Выравниваем элементы по вертикали по центру */
+  
+}
+
+.checkbox-text {
+  display: flex; /* Используем flexbox для расположения элементов внутри label */
+  align-items: center; /* Выравниваем элементы по вертикали по центру */
+  margin-bottom: 15px;
+  margin-left: 5px;
+}
+

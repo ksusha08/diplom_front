@@ -42,7 +42,7 @@ export default function Reports() {
     };
 
     function IncomeChart({ data }) {
-        const COLORS = ['turquoise', 'aquamarine', 'navy', 'blue','cornflowerblue', 'deepskyblue', 'cyan', 'steelblue', 'teal', 'royalblue', 'dodgerblue'];
+        const COLORS = ['turquoise', 'aquamarine', 'navy', 'blue', 'cornflowerblue', 'deepskyblue', 'cyan', 'steelblue', 'teal', 'royalblue', 'dodgerblue'];
         const incomeData = data.map(document => ({
             name: document.idinfo,
             value: document.incomeAmount,
@@ -68,9 +68,9 @@ export default function Reports() {
             </PieChart>
         );
     }
-    
+
     function ExpenseChart({ data }) {
-        const COLORS = ['#790307', '#e22529', '#fc0514','#f0671c', '#f9ce00',"#feeb31", '#c51d90', '#df2185', '#c65dcf', '#8f71ed', '#9c4bce'];
+        const COLORS = ['#790307', '#e22529', '#fc0514', '#f0671c', '#f9ce00', "#feeb31", '#c51d90', '#df2185', '#c65dcf', '#8f71ed', '#9c4bce'];
         const expenseData = data.map(document => ({
             name: document.idinfo,
             value: document.expenseAmount,
@@ -100,46 +100,47 @@ export default function Reports() {
     return (
         <div className="items-container" >
             <Menu />
-            <ReportMenu />
+            <div className="category-container">
+                <ReportMenu />
+                <div className="search-analysis">
+                    <input
+                        type="date"
+                        placeholder="Дата начала"
+                        className="form-control"
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                    />
+                    <input
+                        type="date"
+                        placeholder="Дата окончания"
+                        className="form-control"
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                    />
+                    <button className="btn btn-dark mx-2" style={{ width: '800px' }} onClick={generateReport}>
+                        Построить диаграммы
+                    </button>
 
+                </div>
 
-            <div className="search">
-                <input
-                    type="date"
-                    placeholder="Дата начала"
-                    className="form-control"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                />
-                <input
-                    type="date"
-                    placeholder="Дата окончания"
-                    className="form-control"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                />
-                <button className="btn btn-dark mx-2" style={{ width: '800px' }} onClick={generateReport}>
-                    Построить диаграммы
-                </button>
+                <div className="report-container">
+                    <div style={{ display: 'flex', marginTop:'20px' }}>
+
+                        <>
+                            <div style={{ margin: '0 auto' }}>
+                                <h2 >Приходы</h2>
+                                <IncomeChart data={documents} />
+                            </div>
+                            <div style={{ margin: '0 auto' }}>
+                                <h2>Расходы</h2>
+                                <ExpenseChart data={documents} />
+                            </div>
+                        </>
+
+                    </div>
+                </div>
 
             </div>
-
-            <div style={{ display: 'flex' }}>
-               
-                    <>
-                        <div style={{ margin: '0 auto' }}>
-                            <h2 >Приходы</h2>
-                            <IncomeChart data={documents} />
-                        </div>
-                        <div style={{ margin: '0 auto' }}>
-                            <h2>Расходы</h2>
-                            <ExpenseChart data={documents} />
-                        </div>
-                    </>
-             
-            </div>
-
-
         </div>
 
 

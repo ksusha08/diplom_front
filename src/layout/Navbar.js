@@ -9,7 +9,7 @@ export default function Navbar() {
       <nav className="bg-dark-gradient footer navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            TOBAPHO-СКЛАДСКОЙ УЧЕТ
+            УПРАВЛЕНИЕ ЗАПАСАМИ
           </a>
 
           <button

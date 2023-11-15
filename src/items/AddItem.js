@@ -16,8 +16,7 @@ export default function AddItem() {
   const [item, setItem] = useState({
     name: '',
     vendoreCode: '',
-    discountPrice: '',
-    number: '',
+    discountPrice: ''
   });
 
   const { name, vendoreCode, discountPrice, number } = item;
@@ -49,7 +48,7 @@ export default function AddItem() {
       return;
     }
 
-    if (!name || !vendoreCode || !discountPrice || !number || !number || isNaN(parseFloat(discountPrice)) || isNaN(parseFloat(number))) {
+    if (!name || !vendoreCode || !discountPrice || isNaN(parseFloat(discountPrice)) ) {
       setError('Заполните правильно все поля!');
       return;
     }
@@ -151,19 +150,7 @@ export default function AddItem() {
               />
             </div>
 
-            <div className='mb-3'>
-              <label htmlFor='Number' className='form-label'>
-                Количество
-              </label>
-              <input
-                type='text'
-                className='form-control'
-                placeholder='Введите количество'
-                name='number'
-                value={number}
-                onChange={(e) => onInputChange(e)}
-              />
-            </div>
+      
 
             <div className="mb-3">
               <label htmlFor="photos" className="form-label">
