@@ -6,12 +6,18 @@ import '../styles/style.css';
 import '../styles/analysisstyle.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFolder } from "@fortawesome/free-solid-svg-icons";
+import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 
 export default function Calculation() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
+    const [isCalculationsPerformed, setIsCalculationsPerformed] = useState(false);
+    const [isItemsSelected, setIsItemsSelected] = useState(false);
 
+    const [openCategories, setOpenCategories] = useState([]);
 
     const closeModal = () => {
         setModalIsOpen(false);
@@ -43,6 +49,7 @@ export default function Calculation() {
         try {
             const result = await axios.post("http://localhost:8081/calculate", { items: selectedItemsArray });
             setCalculations(result.data);
+            setIsCalculationsPerformed(true);
         } catch (error) {
             console.error("Ошибка при получении данных:", error);
         }
@@ -101,6 +108,8 @@ export default function Calculation() {
         } else {
             setSelectedCategories([...selectedCategories, categoryId]);
         }
+
+        setOpenCategories(openCategories.includes(categoryId) ? openCategories.filter(id => id !== categoryId) : [...openCategories, categoryId]);
     };
 
     const handleItemCheckboxChange = (categoryId, itemId) => {
@@ -117,6 +126,7 @@ export default function Calculation() {
         }
 
         setSelectedItems(updatedSelectedItems);
+        setIsItemsSelected(Object.values(updatedSelectedItems).flat().length > 0);
     };
 
     return (
@@ -133,25 +143,31 @@ export default function Calculation() {
 
                                 <div className="checkbox-container2">
                                     <label className="checkbox-text" >
-                                        Выберите категории и номенклатуры
+                                        Выберите номенклатуры из категорий
                                     </label>
                                     {categories.map((category) => (
                                         <li key={category.id}>
+
                                             <div className="checkbox-container">
                                                 <label className="checkbox-label">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={selectedCategories.includes(category.id)}
-                                                        onChange={() => handleCategoryCheckboxChange(category.id)}
-                                                    />
+                                                    <div
+                                                        className={`custom-checkbox ${selectedCategories.includes(category.id) ? "checked" : ""}`}
+                                                        onClick={() => handleCategoryCheckboxChange(category.id)}
+                                                    >
+                                                        <FontAwesomeIcon icon={openCategories.includes(category.id) ? faFolderOpen : faFolder} />
+                                                    </div>
                                                     {category.name}
                                                 </label>
+
+
+
                                                 <ul style={{ display: categoryStates[category.id] ? 'block' : 'none' }}>
                                                     {items[category.id]?.map((item) => (
                                                         <li key={item.id}>
                                                             <label className="checkbox-label">
                                                                 <input
                                                                     type="checkbox"
+                                
                                                                     checked={(selectedItems[category.id] || []).includes(item.id)}
                                                                     onChange={() => handleItemCheckboxChange(category.id, item.id)}
                                                                 />
@@ -167,7 +183,7 @@ export default function Calculation() {
                             </ul>
                             <ul>
 
-                                <table className="table border shadow">
+                                <table className="table border shadow" style={{ width: '700px' }}>
                                     <thead>
                                         <tr>
                                             <th scope="col">ИД</th>
@@ -200,13 +216,23 @@ export default function Calculation() {
                             </ul>
 
                             <ul>
-                                <button className="btn btn-dark mx-2" style={{ width: '130px' }} onClick={getCalculations}>
+                                <button
+                                    className="btn btn-dark"
+                                    style={{ width: '110px' }}
+                                    onClick={getCalculations}
+                                    disabled={!isItemsSelected} // Заблокировать, если не выбрано ни одного товара
+                                >
                                     Рассчитать
                                 </button>
                             </ul>
 
                             <ul>
-                                <button className="btn btn-dark mx-2" style={{ width: '190px' }} onClick={setCalculationsToItems}>
+                                <button
+                                    className="btn btn-dark"
+                                    style={{ width: '190px' }}
+                                    onClick={setCalculationsToItems}
+                                    disabled={!isCalculationsPerformed}
+                                >
                                     Установить значения
                                 </button>
                             </ul>

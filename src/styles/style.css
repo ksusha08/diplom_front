@@ -137,6 +137,24 @@ th {
 
 }
 
+.storehouseitems-container {
+ 
+  padding-left: 10px;
+  position: absolute;
+  margin-top: 30px;
+  padding-right: 10px;
+  height: 83vh;
+  width: 1800px;
+
+  margin-left: 55px;
+  margin-right: 50px;
+  background-color: white;
+
+  border-radius: 30px;  
+  box-shadow: 2px 2px 20px rgba(0, 0, 0, 1);
+
+}
+
 .item-container {
   position: absolute;
   width: 1700px;
@@ -315,3 +333,29 @@ th {
 
 }
 
+.name-lable{
+  font-size:22px;
+  margin-top: 10px;
+  margin-right: 1380px;
+  color: black;
+  
+  text-decoration: underline rgba(248, 78, 119, 1);
+}
+.name-lable2{
+  font-size:22px;
+  margin-top: 10px;
+  margin-right: 1360px;
+  color: black;
+  
+  text-decoration: underline rgba(248, 78, 119, 1);
+}
+
+.name-lable3{
+  font-size:22px;
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-right: 1290px;
+  color: black;
+  
+  text-decoration: underline rgba(248, 78, 119, 1);
+}

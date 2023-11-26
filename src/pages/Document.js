@@ -273,7 +273,7 @@ export default function Documents() {
                       </Link>
 
 
-                      {userRole.includes('MANAGER') && (
+                      {userRole.includes('USER') && (
                         <button
                           className="btn btn-dark mx-2"
                           onClick={() => holdDocument(document)}

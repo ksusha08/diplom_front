@@ -9,9 +9,9 @@ export default function AdminMenu() {
                 <li className="report-menu-li">
                     <Link to="/adcanalysis">Анализ</Link>
                 </li>
-                <li className="report-menu-li">
+                {/* <li className="report-menu-li">
                     <Link to="/reports">Отчет по продажам</Link>
-                </li>
+                </li> */}
                 <li className="report-menu-li">
                     <Link to="/report2">Отчет о приходах и расходах</Link>
                 </li>

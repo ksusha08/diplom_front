@@ -97,7 +97,7 @@ export default function Reports() {
                                 <thead>
                                     <tr>
 
-                                        <th scope="col">Товар</th>
+                                        <th scope="col">Номенклатура</th>
                                         <th scope="col">Приход</th>
                                         <th scope="col">Расход</th>
                                         <th scope="col">Остаток</th>

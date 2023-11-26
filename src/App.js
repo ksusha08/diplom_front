@@ -4,6 +4,7 @@ import './styles/menu.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import Navbar from './layout/Navbar';
 import Footer from './layout/Footer';
+import NotFound from './layout/NotFound';
 
 import MainMenu from './menu/MainMenu';
 
@@ -52,16 +53,18 @@ import Diagramm from './pages/Diagramm';
 import Recommendations from './analysis/Recommendations';
 import Calculation from './analysis/Calculation';
 
+
 function App() {
   return (
     
     <div className="App">
     
     <Router>
-
+    
     <Navbar/>
    
     <Routes>
+    
     <Route exact path="/" element= {<Login className="login-background"/>}/>
     <Route exact path="/register" element= {<Register className="login-background"/>}/>
 
@@ -107,9 +110,13 @@ function App() {
 
     <Route exact path="/contacts" element= {<Contacts/>}/>
     <Route exact path="/privacy" element= {<Privacy/>}/>
+    <Route path="*" element={<NotFound/>} />  
     </Routes>
   
     <Footer/>
+
+    
+  
     </Router>
       
     </div>

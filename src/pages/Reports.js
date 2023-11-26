@@ -73,7 +73,7 @@ export default function Reports() {
                         <table className="table border shadow">
                             <thead>
                                 <tr>
-                                    <th scope="col">Товар</th>
+                                    <th scope="col">Номенклатура</th>
                                     <th scope="col">Количество</th>
                                     <th scope="col">Сумма</th>
                                 </tr>

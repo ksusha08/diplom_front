@@ -5,6 +5,9 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ErrorModal from "../context/ErrorModal";
 
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faShare } from "@fortawesome/free-solid-svg-icons";
+
 import '../styles/style.css';
 
 
@@ -58,7 +61,7 @@ export default function OpenDocument() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (document.type=="расход" && selectedItem && amount > selectedItem.storehouseQuantity) {
+    if (document.type == "расход" && selectedItem && amount > selectedItem.storehouseQuantity) {
       setError("Недостаточно товаров на складе.");
       return;
     }
@@ -90,179 +93,182 @@ export default function OpenDocument() {
 
   return (
 
-    <div className="main-container">
-      <Link
-        className="btn btn-dark ml-0 "
-        to={`/documents`}
-        style={{ float: "right" }}
-      >
-        Назад
-      </Link>
-
-      <div className="container">
-        {/* Display error modal if error exists */}
-        {error && (
-          <ErrorModal message={error} onClose={() => setError(null)} />
-        )}
-        {/* ... (rest of your JSX) ... */}
-      </div>
-
-      <div className="row" style={{ marginTop: '30px', height: '86.8vh' }}>
+    <div className="items-container" >
+      <div className="storehouseitems-container">
 
 
-        <div className="col-md-6">
+        <Link
+          className="btn btn-dark ml-0 "
+          to={`/documents`}
+          style={{ float: "right", marginTop: "15px", marginRight: "25px" }}
+        >
+          <FontAwesomeIcon icon={faShare} />
+        </Link>
 
-          <div className="container">
-            <h3>Товары</h3>
+        <div className="container">
+          {/* Display error modal if error exists */}
+          {error && (
+            <ErrorModal message={error} onClose={() => setError(null)} />
+          )}
+          {/* ... (rest of your JSX) ... */}
+        </div>
+
+        <div className="row" style={{ marginTop: '30px', height: '86.8vh' }}>
+
+
+          <div className="col-md-6">
 
             <div className="container">
+              <h3>Номеклатура</h3>
+
+              <div className="container">
 
 
-              <div className="d-flex justify-content-between mb-3" >
-                <div className='mb-3'>
-                  <label htmlFor="vendoreCodeInput">Артикул товара:</label>
-                  <input
-                    type="text"
-                    id="vendoreCodeInput"
-                    name="vendoreCode"
-                    className="form-control"
-                    value={selectedItem ? selectedItem.vendoreCode : ""}
-                    readOnly
-                  />
+                <div className="d-flex justify-content-between mb-3" >
+                  <div className='mb-3'>
+                    <label htmlFor="vendoreCodeInput">Артикул товара:</label>
+                    <input
+                      type="text"
+                      id="vendoreCodeInput"
+                      name="vendoreCode"
+                      className="form-control"
+                      value={selectedItem ? selectedItem.vendoreCode : ""}
+                      readOnly
+                    />
+                  </div>
+                  <div className='mb-3'>
+                    <label htmlFor="discountPriceInput">Цена за единицу:</label>
+                    <input
+                      type="text"
+                      id="discountPriceInput"
+                      name="discountPrice"
+                      className="form-control"
+                      value={selectedItem ? selectedItem.discountPrice : ""}
+                      readOnly
+                    />
+                  </div>
+                  <div className='mb-3'>
+                    <label htmlFor="number">Количество:</label>
+                    <input
+                      type="text"
+                      id="number"
+                      name="number"
+                      className="form-control"
+                      value={amount}
+                      onChange={handleAmountChange}
+                    />
+                  </div>
+
+                  <button type='submit' className='btn btn-dark  custom-height' onClick={handleSubmit}
+                    disabled={!selectedItem || !amount} >
+                    Добавить
+                  </button>
+
                 </div>
-                <div className='mb-3'>
-                  <label htmlFor="discountPriceInput">Цена за единицу:</label>
-                  <input
-                    type="text"
-                    id="discountPriceInput"
-                    name="discountPrice"
-                    className="form-control"
-                    value={selectedItem ? selectedItem.discountPrice : ""}
-                    readOnly
-                  />
-                </div>
-                <div className='mb-3'>
-                  <label htmlFor="number">Количество:</label>
-                  <input
-                    type="text"
-                    id="number"
-                    name="number"
-                    className="form-control"
-                    value={amount}
-                    onChange={handleAmountChange}
-                  />
-                </div>
-
-                <button type='submit' className='btn btn-dark  custom-height' onClick={handleSubmit}
-                  disabled={!selectedItem || !amount} >
-                  Добавить
-                </button>
-
               </div>
-            </div>
 
-            <div className="table-wrapper-scroll-y my-custom-scrollbar">
-              <div className="py-4 d-flex justify-content-end">
-                <table className="table border shadow">
-                  <thead>
-                    <tr>
-                      <th scope="col">ИД</th>
-                      <th scope="col">Название</th>
-                      <th scope="col">Артикул</th>
-                      <th scope="col">Цена</th>
-                      <th scope="col">Общее Количество</th>
-                      <th scope="col">Количество на складе</th>
-                      <th scope="col">Изображение</th>
-                      <th scope="col">Действие</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {items.map((item, index) => (
-                      <tr key={item.id}>
-                        <th scope="row">{item.id}</th>
-                        <td>{item.name}</td>
-                        <td>{item.vendoreCode}</td>
-                        <td>{item.discountPrice}</td>
-                        <td>{item.number}</td>
-                        <td>{item.storehouseQuantity}</td>
-                        <td>
-                          {item.photos && (
-                            <img
-                              src={`http://localhost:8081${item.photosImagePath}`}
-                              alt={item.name}
-                              height="50"
-                            />
-                          )}
-                        </td>
-                        <td>
-                          <button
-                            className="btn btn-dark ml-0"
-                            onClick={() => {
-                              setSelectedItem(item);
-                            }}
-                            disabled={document.status === "проведен"}
-                          >
-                            Выбрать
-                          </button>
-                        </td>
+              <div className="table-wrapper-scroll-y my-custom-scrollbar">
+                <div className="py-4 d-flex justify-content-end">
+                  <table className="table border shadow">
+                    <thead>
+                      <tr>
+                        <th scope="col">ИД</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Артикул</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Общее Количество</th>
+                        <th scope="col">Количество на складе</th>
+                        <th scope="col">Изображение</th>
+                        <th scope="col">Действие</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {items.map((item, index) => (
+                        <tr key={item.id}>
+                          <th scope="row">{item.id}</th>
+                          <td>{item.name}</td>
+                          <td>{item.vendoreCode}</td>
+                          <td>{item.discountPrice}</td>
+                          <td>{item.number}</td>
+                          <td>{item.storehouseQuantity}</td>
+                          <td>
+                            {item.photos && (
+                              <img
+                                src={`http://localhost:8081${item.photosImagePath}`}
+                                alt={item.name}
+                                height="50"
+                              />
+                            )}
+                          </td>
+                          <td>
+                            <button
+                              className="btn btn-dark ml-0"
+                              onClick={() => {
+                                setSelectedItem(item);
+                              }}
+                              disabled={document.status === "проведен"}
+                            >
+                              Выбрать
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="col-md-6">
-          <div className="container">
-            <h3>Содержимое документа</h3>
-            <div className="table-wrapper-scroll-y my-custom-scrollbar">
-              <div className="py-4 d-flex justify-content-end">
-                <table className="table border shadow">
-                  <thead>
-                    <tr>
-                      <th scope="col">Товар</th>
-                      <th scope="col">Количество</th>
-                      <th scope="col">Цена</th>
-                      <th scope="col">Цена c коэффициентом</th>
-                      <th scope="col">Сумма</th>
-                      <th scope="col">Действие</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                    {documentInfo.map((info, index) => (
-                      <tr key={index}>
-
-                        <td>{info.item.name}</td>
-                        <td>{info.amount}</td>
-                        <td>{info.item.discountPrice}</td>
-                        <td>{(info.coefficient_price).toFixed(1)}</td>
-                        <td>{(info.summ).toFixed(1)}</td>
-
-                        <td>
-                          <button
-                            className="btn btn-outline-dark"
-                            onClick={() => deleteInfo(info.id)}
-                            disabled={document.status === "проведен"}
-                          >
-                            <FontAwesomeIcon icon={faTrash} />
-                          </button>
-                        </td>
-
+          <div className="col-md-6">
+            <div className="container">
+              <h3>Содержимое документа</h3>
+              <div className="table-wrapper-scroll-y my-custom-scrollbar">
+                <div className="py-4 d-flex justify-content-end">
+                  <table className="table border shadow">
+                    <thead>
+                      <tr>
+                        <th scope="col">Номенклатура</th>
+                        <th scope="col">Количество</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Цена c коэффициентом</th>
+                        <th scope="col">Сумма</th>
+                        <th scope="col">Действие</th>
                       </tr>
-                    ))}
+                    </thead>
+                    <tbody>
 
-                  </tbody>
-                </table>
+                      {documentInfo.map((info, index) => (
+                        <tr key={index}>
+
+                          <td>{info.item.name}</td>
+                          <td>{info.amount}</td>
+                          <td>{info.item.discountPrice}</td>
+                          <td>{(info.coefficient_price).toFixed(1)}</td>
+                          <td>{(info.summ).toFixed(1)}</td>
+
+                          <td>
+                            <button
+                              className="btn btn-outline-dark"
+                              onClick={() => deleteInfo(info.id)}
+                              disabled={document.status === "проведен"}
+                            >
+                              <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                          </td>
+
+                        </tr>
+                      ))}
+
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
+
+
         </div>
-
-
-
       </div>
     </div>
 

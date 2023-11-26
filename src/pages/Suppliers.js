@@ -30,8 +30,11 @@ export default function Suppliers() {
   return (
     <div className=" items-container">
       <Menu />
-   
+
       <div className="category-container">
+        <label className="name-lable3" >
+          СПРАВОЧНИК КОНТРАГЕНТОВ
+        </label>
         <div className="table-wrapper-scroll-y my-custom-scrollbar">
           <div className="py-4 d-flex justify-content-end">
             <table className="table border shadow">
@@ -48,7 +51,7 @@ export default function Suppliers() {
                       to={`/addsupplier`}
                       style={{ float: "right" }}
                     >
-                       <FontAwesomeIcon icon={faPlus} />
+                      <FontAwesomeIcon icon={faPlus} />
                     </Link>
                     Действие</th>
                 </tr>
@@ -84,7 +87,7 @@ export default function Suppliers() {
           </div>
         </div>
       </div>
-   
+
     </div>
   );
 }

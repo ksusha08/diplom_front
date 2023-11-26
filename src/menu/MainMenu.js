@@ -18,37 +18,45 @@ export default function AdminMenu() {
       <div className="menu-style">
 
 
-        <li className="nav-item" data-text="Справочник складов">
-          <Link to="/storehouse" className="nav-link">
-            <FontAwesomeIcon icon={faWarehouse} />
-          </Link>
-        </li>
+        {userRole.includes('USER') && (
+          <li className="nav-item" data-text="Справочник складов">
+            <Link to="/storehouse" className="nav-link">
+              <FontAwesomeIcon icon={faWarehouse} />
+            </Link>
+          </li>
+        )}
 
-        <li className="nav-item" data-text="Справочник поставщиков">
-          <Link to="/suppliers" className="nav-link">
-            <FontAwesomeIcon icon={faAddressBook} />
-          </Link>
-        </li>
+        {userRole.includes('USER') && (
+          <li className="nav-item" data-text="Справочник поставщиков">
+            <Link to="/suppliers" className="nav-link">
+              <FontAwesomeIcon icon={faAddressBook} />
+            </Link>
+          </li>
+        )}
 
-        <li className="nav-item" data-text="Справрчник категорий">
-          <Link to="/category" className="nav-link">
-            <FontAwesomeIcon icon={faBook} />
-          </Link>
-        </li>
+
+        {userRole.includes('USER') && (
+          <li className="nav-item" data-text="Справочник категорий">
+            <Link to="/category" className="nav-link">
+              <FontAwesomeIcon icon={faBook} />
+            </Link>
+          </li>
+        )}
+
+        {userRole.includes('USER') && (
+          <li className="nav-item" data-text="Документ">
+            <Link to="/documents" className="nav-link">
+              <FontAwesomeIcon icon={faPaste} />
+            </Link>
+          </li>
+        )}
+
 
         <li className="nav-item" data-text="Справочник товаров">
           <Link to="/items" className="nav-link">
             <FontAwesomeIcon icon={faDolly} />
           </Link>
         </li>
-
-
-        <li className="nav-item" data-text="Документ">
-          <Link to="/documents" className="nav-link">
-            <FontAwesomeIcon icon={faPaste} />
-          </Link>
-        </li>
-
 
         {userRole.includes('MANAGER') && (
           <li className="nav-item" data-text="Аналитика">

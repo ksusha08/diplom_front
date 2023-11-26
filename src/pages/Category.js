@@ -56,9 +56,11 @@ export default function Category() {
     return (
         <div className="items-container">
             <Menu />
-            
-            <div className="category-container">
 
+            <div className="category-container">
+                <label className="name-lable2" >
+                    СПРАВОЧНИК КАТЕГОРИЙ
+                </label>
                 <div className="row">
 
                     <div className="col-md-7">

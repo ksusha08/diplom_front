@@ -107,7 +107,7 @@ export default function Reports() {
                                         <th scope="col">Товар</th>
                                         <th scope="col">Категория ABC</th>
                                         <th scope="col">Категория XYZ</th>
-                                        <th scope="col">Продажи</th>
+                                        <th scope="col">Расход</th>
                                     </tr>
                                 </thead>
                                 <tbody>

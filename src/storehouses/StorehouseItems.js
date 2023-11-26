@@ -8,7 +8,9 @@ import * as XLSX from 'xlsx';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faShare } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Table, Button, Form } from 'react-bootstrap';
+
 
 export default function StorehouseItems() {
     const [documents, setDocuments] = useState([]);
@@ -30,6 +32,8 @@ export default function StorehouseItems() {
             min_amount: document.min_amount,
             reorder_level:document.reorder_level,
             max_amount: document.max_amount,
+            order_cost: document.order_cost,
+            maintenance_cost: document.maintenance_cost
         }));
         setChartData(chartData);
 
@@ -54,20 +58,20 @@ export default function StorehouseItems() {
 
     return (
         <div className="items-container" >
-            <div className="category-container">
+            <div className="storehouseitems-container">
 
                 <Link
                     className="btn btn-dark ml-0 "
                     to={`/items`}
-                    style={{ float: "right", marginTop: "35px" }}
+                    style={{ float: "right", marginTop: "15px", marginRight: "25px" }}
                 >
-                    Вернуться Назад
+                    <FontAwesomeIcon icon={faShare} />
                 </Link>
 
                 <div className="report-container">
 
 
-                    <div className="table-wrapper-scroll-y my-custom-scrollbar" style={{ width: '800px' }}>
+                    <div className="table-wrapper-scroll-y my-custom-scrollbar" style={{ width: '1000px' }}>
                         <div className="py-2 d-flex justify-content-start">
 
                             <table className="table table-bordered shadow">
@@ -78,6 +82,8 @@ export default function StorehouseItems() {
                                         <th scope="col">Минимальный запас</th>
                                         <th scope="col">Точка заказа</th>
                                         <th scope="col">Максимальный запас</th>
+                                        <th scope="col">Затраты на содержание ед</th>
+                                        <th scope="col">Затраты на выполнение одного заказа</th>
                                         <th scope="col">Действие</th>
                                     </tr>
                                 </thead>
@@ -89,6 +95,8 @@ export default function StorehouseItems() {
                                             <td>{document.min_amount}</td>
                                             <td>{document.reorder_level}</td>
                                             <td>{document.max_amount}</td>
+                                            <td>{document.maintenance_cost}</td>
+                                            <td>{document.order_cost}</td>
                                             <td>
                                                 <button className="btn btn-outline-dark mx-2" onClick={() => editStorehouseItem(document)}>
                                                     <FontAwesomeIcon icon={faPen} />
@@ -123,7 +131,7 @@ export default function StorehouseItems() {
 
                 <Modal show={modalShow} onHide={() => setModalShow(false)} centered>
                     <Modal.Header closeButton>
-                        <Modal.Title>Управление уровнем запаса</Modal.Title>
+                        <Modal.Title>Управление параметрами запаса</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         {editedDocument && (
@@ -163,6 +171,32 @@ export default function StorehouseItems() {
                                             setEditedDocument({
                                                 ...editedDocument,
                                                 max_amount: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="maintenance_cost">
+                                    <Form.Label>Затраты на содержание 1 единицы запаса:</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        value={editedDocument.maintenance_cost}
+                                        onChange={(e) =>
+                                            setEditedDocument({
+                                                ...editedDocument,
+                                                maintenance_cost: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </Form.Group>
+                                <Form.Group controlId="order_cost">
+                                    <Form.Label>Затраты на выполнение 1 заказа:</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        value={editedDocument.order_cost}
+                                        onChange={(e) =>
+                                            setEditedDocument({
+                                                ...editedDocument,
+                                                order_cost: e.target.value,
                                             })
                                         }
                                     />

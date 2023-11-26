@@ -8,7 +8,7 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useParams } from "react-router-dom";
 import { HashRouter as Router, Route, NavLink } from "react-router-dom";
-
+import logoImage from '../img/logo.png';
 
 
 function Login() {
@@ -27,10 +27,10 @@ function Login() {
           localStorage.setItem('user', JSON.stringify(response.data));
           navigate('/activeusers');
         } else {
-          if(response.data.status.includes('активен')){
-          localStorage.setItem('user', JSON.stringify(response.data));
-          navigate('/main');
-          }else{
+          if (response.data.status.includes('активен')) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+            navigate('/main');
+          } else {
             setError('Доступ к приложению ограничен!');
           }
         }
@@ -45,16 +45,18 @@ function Login() {
       <div className=" p-4 mt-5.5 login-form-wrapper" >
 
         <div className="pageSwitcher">
-             
-              <NavLink
-                exact
-                to="/register"
-                activeClassName="pageSwitcherItem-active"
-                className="pageSwitcherItem"
-              >
-                Регистрация
-              </NavLink>
-            </div>
+
+          {/* <img src={logoImage} style={{ marginRight: '200px', height: '80px', width: '80px' , position:'absolurete'}} /> */}
+          
+          <NavLink
+            exact
+            to="/register"
+            activeClassName="pageSwitcherItem-active"
+            className="pageSwitcherItem"
+          >
+            Регистрация
+          </NavLink>
+        </div>
 
         <h2 className="login-text text-center m-4">Авторизация</h2>
 

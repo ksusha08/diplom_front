@@ -19,7 +19,7 @@ export default function Storehouse() {
         max_capacity: ""
     });
 
-    const { name, address,max_capacity } = storehouse
+    const { name, address, max_capacity } = storehouse
 
     const onInputChange = async (e) => {
 
@@ -33,7 +33,7 @@ export default function Storehouse() {
             setError('Заполните все поля!');
             return;
         }
-        
+
         if (isNaN(parseFloat(max_capacity))) {
             setError('Максимальная вместительность должна быть числом');
             return;
@@ -63,7 +63,10 @@ export default function Storehouse() {
         <div className="items-container">
             <Menu />
             <div className="category-container">
-
+            <label className="name-lable" >
+                    СПРАВОЧНИК СКЛАДОВ
+                </label>
+            
                 <div className="row" >
 
                     <div className="col-md-7">
