@@ -18,7 +18,7 @@ export default function Items() {
     loadItems();
   }, []);
   const loadItems = async () => {
-    const result = await axios.get("http://localhost:8081/items");
+    const result = await axios.get("http://localhost:8080/items");
     setItems(result.data);
   };
   const deleteItem = async (id) => {
